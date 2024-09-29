@@ -8,10 +8,69 @@ import { useState,useEffect } from 'react'
 import SecondForm from './component/SecondForm'
 import ThirdForm from './component/ThirdForm'
 import FourthForm from './component/FourthForm'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
+import axios from 'axios'
 
 const page = () => {
 
-  const [pagination,setpagination]=useState<number>(1);
+  const [pagination, setPagination] = useState(1)
+  const [formData, setFormData] = useState({
+    entityType:"",
+  
+  })
+  const router = useRouter();
+
+
+  const updateFormData = (data:any) => {
+    setFormData(prevData => ({
+      ...prevData,
+      ...data
+    }))
+  }
+
+  const handleSubmit = async () => {
+    try {
+      const toastId = toast.loading("Submitting");
+      console.log(formData);
+      let endpoint = '';
+
+    
+      
+      switch(formData.entityType) {
+        case "COMMUNITY":
+          endpoint = 'http://localhost:4000/api/communitiesRoutes/communities';
+          break;
+        case "DEPT. SOCIETY":
+          endpoint = 'http://localhost:4000/api/deptSocieties/departmental-societies';
+          break;
+        case "PROFF. SOCIETY":
+          endpoint = 'http://localhost:4000/api/proffSocieties/professional-societies';
+          break;
+        default:
+          endpoint = 'http://localhost:4000/api/clubRoutes/clubs';
+      }
+
+    
+      const response=await axios.post(endpoint,formData);
+
+      console.log("response : ",response);
+
+      if (response.data.success) {
+        toast.dismiss(toastId); 
+        toast.success("Successfully applied");
+        router.push('/login');
+      } else {
+        toast.dismiss(toastId); // dismiss loading toast
+        toast.error("Something went wrong. Please try again.");
+        router.push('/login');
+
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      alert('An error occurred while submitting the form. Please try again.')
+    }
+  }
 
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
 
@@ -68,13 +127,10 @@ const page = () => {
         </div>
       </div>
       
-     {pagination==1 && <FirstForm pagination={pagination} setPagination={setpagination} />}
-
-      {pagination==2 && <SecondForm pagination={pagination} setPagination={setpagination}/>}
-      
-      {pagination==3 && <ThirdForm pagination={pagination} setPagination={setpagination}/>}
-
-      {pagination==4 && <FourthForm pagination={pagination} setPagination={setpagination} />}
+    {pagination === 1 && <FirstForm pagination={pagination} setPagination={setPagination} formData={formData} updateFormData={updateFormData} />}
+          {pagination === 2 && <SecondForm pagination={pagination} setPagination={setPagination} formData={formData} updateFormData={updateFormData} />}
+          {pagination === 3 && <ThirdForm pagination={pagination} setPagination={setPagination} formData={formData} updateFormData={updateFormData} />}
+          {pagination === 4 && <FourthForm pagination={pagination} setPagination={setPagination} formData={formData} updateFormData={updateFormData} handleSubmit={handleSubmit} />}
       </div>
 
       

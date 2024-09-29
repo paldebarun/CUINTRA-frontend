@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-
- 
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -168,7 +166,7 @@ const Page = ({ params }: { params: { entityName: string } }) => {
   }
 
   return (
-    <>
+   
       <div className="flex justify-center items-center py-16">
         <div className="p-10 bg-[#e3edff] rounded-lg shadow-lg w-full max-w-2xl">
           <div className="bg-white p-8 rounded-lg shadow-md">
@@ -291,7 +289,7 @@ const Page = ({ params }: { params: { entityName: string } }) => {
           </div>
         </div>
       </div>
-    </>
+  
   );
 };
 
