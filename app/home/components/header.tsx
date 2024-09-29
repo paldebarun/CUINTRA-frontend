@@ -6,7 +6,7 @@ type Props = {}
 export default function Header({ }: Props) {
     return (
 
-        <header className="bg-[#151515]/[.15] backdrop-blur-[520.83px] text-white p-4">
+        <header className="bg-[#151515]/[.15] backdrop-blur-[520.83px] text-white p-4 absolute top-0 left-0 w-full">
             <div className="container mx-auto flex flex-wrap items-center justify-between">
                 <div className="flex items-center space-x-4">
                     <Image src="/culogo.png" alt='cu-logo' width={1000} height={1000} className='h-8 w-auto' />
