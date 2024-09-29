@@ -1,9 +1,14 @@
 import React from 'react'
+import Header from './components/header'
 
 type Props = {}
 
 export default function Home({}: Props) {
   return (
-    <div>Home</div>
+    <>
+        <div className="flex flex-col">
+            <Header/>
+        </div>
+    </>
   )
 }
