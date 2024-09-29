@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import tick from '../images/tick.png'
 import FirstForm from './component/FirstForm'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import SecondForm from './component/SecondForm'
 import ThirdForm from './component/ThirdForm'
 import FourthForm from './component/FourthForm'
@@ -13,6 +13,33 @@ const page = () => {
 
   const [pagination,setpagination]=useState<number>(1);
 
+  const [isDesktop, setIsDesktop] = useState<boolean>(true);
+
+  // Function to handle screen size
+  const handleResize = () => {
+    setIsDesktop(window.innerWidth >= 1024); // 1024px is the threshold for desktop view
+  };
+
+  useEffect(() => {
+    // Check screen size on component mount
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  if (!isDesktop) {
+    return (
+      <div className='w-full h-screen flex justify-center items-center'>
+        <p className='text-xl font-bold'>Please open this page on a desktop for the best experience.</p>
+      </div>
+    );
+  }
 
 
   return (

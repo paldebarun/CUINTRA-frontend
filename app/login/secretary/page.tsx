@@ -1,12 +1,34 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import logo from '../../images/loginpageicon2.png';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 const Page = () => {
+  const [isDesktop, setIsDesktop] = useState<boolean>(true);
+
+  // Function to handle screen size
+  const handleResize = () => {
+    setIsDesktop(window.innerWidth >= 1024); // 1024px is the threshold for desktop view
+  };
+
+  useEffect(() => {
+    // Check screen size on component mount
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  
+
   const [loginData, setLoginData] = useState({ userID: '', password: '' });
   const [error, setError] = useState('');
   const router = useRouter();
@@ -58,6 +80,17 @@ const Page = () => {
       [name]: value,
     }));
   };
+
+
+  if (!isDesktop) {
+    return (
+      <div className='w-full h-screen flex justify-center items-center'>
+        <p className='text-xl font-bold'>Please open this page on a desktop for the best experience.</p>
+      </div>
+    );
+  }
+
+  
 
   return (
     <div className='loginpage h-screen flex justify-center items-center'>

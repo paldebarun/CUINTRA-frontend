@@ -5,7 +5,7 @@ import React from 'react'
 import { Input } from '@/components/ui/input'
 import { CalendarIcon } from "@radix-ui/react-icons"
 import { format } from "date-fns"
- import { useState } from 'react'
+ import { useState,useEffect } from 'react'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -33,6 +33,28 @@ import rupee from '../images/₹.png'
 
 
 const page = () => {
+
+    const [isDesktop, setIsDesktop] = useState<boolean>(true);
+
+  // Function to handle screen size
+  const handleResize = () => {
+    setIsDesktop(window.innerWidth >= 1024); // 1024px is the threshold for desktop view
+  };
+
+  useEffect(() => {
+    // Check screen size on component mount
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+ 
 
     const [startdate, setStartDate] = useState<Date | any>(new Date());
     const [endDate,setEndDate]= useState<Date | any>()
@@ -76,6 +98,15 @@ const page = () => {
         "y",
         "z"
     ]
+
+    if (!isDesktop) {
+        return (
+          <div className='w-full h-screen flex justify-center items-center'>
+            <p className='text-xl font-bold'>Please open this page on a desktop for the best experience.</p>
+          </div>
+        );
+      }
+    
 
   return (
     <div className='bg-[#E3EDFF] px-2 mt-8 py-10 w-8/12 mx-auto rounded-md '>

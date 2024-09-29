@@ -486,6 +486,29 @@ interface ScheduleEvent {
 
 const Page = () => {
 
+  const [isDesktop, setIsDesktop] = useState<boolean>(true);
+
+  // Function to handle screen size
+  const handleResize = () => {
+    setIsDesktop(window.innerWidth >= 1024); // 1024px is the threshold for desktop view
+  };
+
+  useEffect(() => {
+    // Check screen size on component mount
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+ 
+
+
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [schedule, setSchedule] = useState<ScheduleEvent[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -590,7 +613,16 @@ const Page = () => {
   if(user && user.role!="Central Office"){
     router.push('/login');
   }
- 
+  
+  if (!isDesktop) {
+    return (
+      <div className='w-full h-screen flex justify-center items-center'>
+        <p className='text-xl font-bold'>Please open this page on a desktop for the best experience.</p>
+      </div>
+    );
+  }
+
+
   if (!user) return <div></div>;
   if (!counts) return <div></div>;
     return (

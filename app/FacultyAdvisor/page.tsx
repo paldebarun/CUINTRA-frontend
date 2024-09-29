@@ -580,6 +580,30 @@ const EntityData = [
 
 
 const Page = () => {
+
+  const [isDesktop, setIsDesktop] = useState<boolean>(true);
+
+  // Function to handle screen size
+  const handleResize = () => {
+    setIsDesktop(window.innerWidth >= 1024); // 1024px is the threshold for desktop view
+  };
+
+  useEffect(() => {
+    // Check screen size on component mount
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  
+
+
   // const [date, setDate] = useState(new Date());
   // const [schedule, setSchedule] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -699,6 +723,18 @@ const Page = () => {
       toast.error('Failed to approve the event. Please try again.');
     }
   };
+
+  
+
+  if (!isDesktop) {
+    return (
+      <div className='w-full h-screen flex justify-center items-center'>
+        <p className='text-xl font-bold'>Please open this page on a desktop for the best experience.</p>
+      </div>
+    );
+  }
+
+
   return (
     <div className='flex w-screen min-h-screen'>
       {/* Sidebar */}
