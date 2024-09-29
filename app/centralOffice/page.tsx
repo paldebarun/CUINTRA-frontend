@@ -16,72 +16,85 @@ import rectanglehollow from '../images/Rectangle 907.png'
 import rectanglefilled from '../images/Rectangle 1393.png'
 import arrowhead from '../images/Group 21861.png'
 import { Calendar } from "@/components/ui/calendar"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { LineChart, Line, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+// import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+// import { LineChart, Line, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useState,useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-
+import toast from 'react-hot-toast';
 import plus from '../images/Group 1000002786.png'
 import {
-  ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
+  // ChartConfig,
+  // ChartContainer,
+  // ChartLegend,
+  // ChartLegendContent,
+  // ChartTooltip,
+  // ChartTooltipContent,
 } from "@/components/ui/chart"
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 
 
-const chartConfig = {
-  Dept_Societies: {
-    label: "Dept.Societies",
-    color: "#54B8FF",
-  },
-  Clubs: {
-    label: "Clubs",
-    color: "#3CD856",
-  },
-  Prof_Societies: {
-    label: "Prof.Societies",
-    color: "#FF947A",
-  },
-  Communities: {
-    label: "Communities",
-    color: "#BF83FF",
-  },
-} satisfies ChartConfig;
+// const chartConfig = {
+//   Dept_Societies: {
+//     label: "Dept.Societies",
+//     color: "#54B8FF",
+//   },
+//   Clubs: {
+//     label: "Clubs",
+//     color: "#3CD856",
+//   },
+//   Prof_Societies: {
+//     label: "Prof.Societies",
+//     color: "#FF947A",
+//   },
+//   Communities: {
+//     label: "Communities",
+//     color: "#BF83FF",
+//   },
+// } satisfies ChartConfig;
 
 
 const sidebarData=[
     {
         icon:home,
-        text:"Home"
+        text:"Home",
+        link:"/"
     },
     {
         icon:ManageEntities,
-        text:"Manage Entities"
+        text:"Manage Entities",
+        link:"/Entities/Club"
     },
     {
         icon:EventApproval,
-        text:"Event Approval"
+        text:"Event Approval",
+        
+        link:"/"
     },
     {
         icon:Notification,
-        text:"Notifications"
+        text:"Notifications",
+        link:"/"
     },
     {
         icon:profile,
-        text:"Profile"
+        text:"Profile",
+        link:"/"
     },
     {
         icon:setting,
-        text:"Setting"
+        text:"Setting",
+        link:"/"
     },
     {
         icon:signup,
-        text:"Signup"
+        text:"Signup",
+        link:"/login"
     },
     
 ]
@@ -97,374 +110,376 @@ interface ScheduleEvent {
   organizer?: string;
 }
 
-const numberOfEvents = [
-  { month: 'Jan', flagship: 2, monthly: 4, weekly: 8 },
-  { month: 'Feb', flagship: 1, monthly: 3, weekly: 10 },
-  { month: 'Mar', flagship: 3, monthly: 5, weekly: 12 },
-  { month: 'Apr', flagship: 2, monthly: 4, weekly: 9 },
-  { month: 'May', flagship: 4, monthly: 6, weekly: 15 },
-  { month: 'Jun', flagship: 3, monthly: 5, weekly: 11 },
-  { month: 'Jul', flagship: 2, monthly: 4, weekly: 13 },
-  { month: 'Aug', flagship: 5, monthly: 7, weekly: 16 },
-  { month: 'Sep', flagship: 4, monthly: 6, weekly: 14 },
-  { month: 'Oct', flagship: 3, monthly: 5, weekly: 12 },
-  { month: 'Nov', flagship: 2, monthly: 4, weekly: 10 },
-  { month: 'Dec', flagship: 6, monthly: 8, weekly: 18 },
-];
-const scheduledData: { [key: string]: ScheduleEvent[]} = {
-  "2024-09-21": [
-    {
-      "start": "9:00",
-      "end": "9:30",
-      "subject": "Interview Call for Freshers"
-    },
-    {
-      "start": "10:00",
-      "end": "10:30",
-      "subject": "Interview Call for Freshers"
-    },
-    {
-      "start": "11:00",
-      "end": "11:30",
-      "subject": "Interview Call for Freshers"
-    },
-    {
-      "start": "12:00",
-      "end": "12:30",
-      "subject": "Interview Call for Freshers"
-    },
-    {
-      "start": "13:00",
-      "end": "13:30",
-      "subject": "Interview Call for Freshers"
-    },
-    {
-      "start": "14:00",
-      "end": "14:30",
-      "subject": "Interview Call for Freshers"
-    },
-    {
-      "start": "15:00",
-      "end": "15:30",
-      "subject": "Interview Call for Freshers"
-    },
-    {
-      "start": "16:00",
-      "end": "16:30",
-      "subject": "Interview Call for Freshers"
-    },
-    {
-      "start": "17:00",
-      "end": "17:30",
-      "subject": "Interview Call for Freshers"
-    }
-  ],
-  "2024-09-22": [
-    {
-      "start": "9:00",
-      "end": "9:30",
-      "subject": "Art Exhibition Setup"
-    },
-    {
-      "start": "10:00",
-      "end": "10:30",
-      "subject": "Art Exhibition Opening"
-    },
-    {
-      "start": "11:00",
-      "end": "11:30",
-      "subject": "Guided Tour"
-    },
-    {
-      "start": "12:00",
-      "end": "12:30",
-      "subject": "Guest Speaker Session"
-    },
-    {
-      "start": "13:00",
-      "end": "13:30",
-      "subject": "Artist Meet & Greet"
-    },
-    {
-      "start": "14:00",
-      "end": "14:30",
-      "subject": "Art Exhibition Main Event",
-      "location": "Art Gallery",
-      "organizer": "Cultural Society"
-    },
-    {
-      "start": "15:00",
-      "end": "15:30",
-      "subject": "Live Painting Demo"
-    },
-    {
-      "start": "16:00",
-      "end": "16:30",
-      "subject": "Closing Ceremony"
-    },
-    {
-      "start": "17:00",
-      "end": "17:30",
-      "subject": "Exhibition Wrap-Up"
-    }
-  ],
-  "2024-09-23": [
-    {
-      "start": "9:00",
-      "end": "9:30",
-      "subject": "AI Workshop Setup"
-    },
-    {
-      "start": "10:00",
-      "end": "10:30",
-      "subject": "Introduction to AI"
-    },
-    {
-      "start": "11:00",
-      "end": "11:30",
-      "subject": "AI Workshop Session 1",
-      "location": "Room 204",
-      "organizer": "Tech Club"
-    },
-    {
-      "start": "12:00",
-      "end": "12:30",
-      "subject": "AI Tools Overview"
-    },
-    {
-      "start": "13:00",
-      "end": "13:30",
-      "subject": "Lunch Break"
-    },
-    {
-      "start": "14:00",
-      "end": "14:30",
-      "subject": "AI Workshop Session 2"
-    },
-    {
-      "start": "15:00",
-      "end": "15:30",
-      "subject": "Hands-on AI Project"
-    },
-    {
-      "start": "16:00",
-      "end": "16:30",
-      "subject": "AI in Industry Discussion"
-    },
-    {
-      "start": "17:00",
-      "end": "17:30",
-      "subject": "Workshop Closing Remarks"
-    }
-  ],
-  "2024-09-24": [
-    {
-      "start": "9:00",
-      "end": "9:30",
-      "subject": "Music Fest Setup"
-    },
-    {
-      "start": "10:00",
-      "end": "10:30",
-      "subject": "Sound Check"
-    },
-    {
-      "start": "11:00",
-      "end": "11:30",
-      "subject": "Band Rehearsal"
-    },
-    {
-      "start": "12:00",
-      "end": "12:30",
-      "subject": "Stage Setup"
-    },
-    {
-      "start": "13:00",
-      "end": "13:30",
-      "subject": "Lunch Break"
-    },
-    {
-      "start": "14:00",
-      "end": "14:30",
-      "subject": "Guest Artist Performance"
-    },
-    {
-      "start": "15:00",
-      "end": "15:30",
-      "subject": "Main Music Fest",
-      "location": "Auditorium",
-      "organizer": "Music Society"
-    },
-    {
-      "start": "16:00",
-      "end": "16:30",
-      "subject": "Band Performance"
-    },
-    {
-      "start": "17:00",
-      "end": "17:30",
-      "subject": "Closing Act"
-    }
-  ],
-  "2024-09-25": [
-    {
-      "start": "9:00",
-      "end": "9:30",
-      "subject": "Hackathon Kickoff",
-      "location": "Lab 101",
-      "organizer": "Coding Club"
-    },
-    {
-      "start": "10:00",
-      "end": "10:30",
-      "subject": "Team Formation"
-    },
-    {
-      "start": "11:00",
-      "end": "11:30",
-      "subject": "Problem Statement Release"
-    },
-    {
-      "start": "12:00",
-      "end": "12:30",
-      "subject": "Coding Begins"
-    },
-    {
-      "start": "13:00",
-      "end": "13:30",
-      "subject": "Lunch Break"
-    },
-    {
-      "start": "14:00",
-      "end": "14:30",
-      "subject": "Coding Continues"
-    },
-    {
-      "start": "15:00",
-      "end": "15:30",
-      "subject": "Progress Check"
-    },
-    {
-      "start": "16:00",
-      "end": "16:30",
-      "subject": "Mentorship Session"
-    },
-    {
-      "start": "17:00",
-      "end": "17:30",
-      "subject": "Day 1 Wrap-Up"
-    }
-  ],
-  "2024-09-26": [
-    {
-      "start": "9:00",
-      "end": "9:30",
-      "subject": "Drama Rehearsal Setup"
-    },
-    {
-      "start": "10:00",
-      "end": "10:30",
-      "subject": "Scene 1 Rehearsal"
-    },
-    {
-      "start": "11:00",
-      "end": "11:30",
-      "subject": "Scene 2 Rehearsal"
-    },
-    {
-      "start": "12:00",
-      "end": "12:30",
-      "subject": "Scene 3 Rehearsal"
-    },
-    {
-      "start": "13:00",
-      "end": "13:30",
-      "subject": "Lunch Break"
-    },
-    {
-      "start": "14:00",
-      "end": "14:30",
-      "subject": "Scene 4 Rehearsal"
-    },
-    {
-      "start": "15:00",
-      "end": "15:30",
-      "subject": "Scene 5 Rehearsal"
-    },
-    {
-      "start": "16:00",
-      "end": "16:30",
-      "subject": "Full Dress Rehearsal",
-      "location": "Main Stage",
-      "organizer": "Drama Club"
-    },
-    {
-      "start": "17:00",
-      "end": "17:30",
-      "subject": "Rehearsal Wrap-Up"
-    }
-  ],
-  "2024-09-27": [
-    {
-      "start": "9:00",
-      "end": "9:30",
-      "subject": "Networking Event Setup"
-    },
-    {
-      "start": "10:00",
-      "end": "10:30",
-      "subject": "Keynote Speech"
-    },
-    {
-      "start": "11:00",
-      "end": "11:30",
-      "subject": "Panel Discussion"
-    },
-    {
-      "start": "12:00",
-      "end": "12:30",
-      "subject": "Networking Session 1"
-    },
-    {
-      "start": "13:00",
-      "end": "13:30",
-      "subject": "Lunch Break"
-    },
-    {
-      "start": "14:00",
-      "end": "14:30",
-      "subject": "Networking Session 2"
-    },
-    {
-      "start": "15:00",
-      "end": "15:30",
-      "subject": "Main Networking Event",
-      "location": "Conference Room",
-      "organizer": "Professional Society"
-    },
-    {
-      "start": "16:00",
-      "end": "16:30",
-      "subject": "Industry Expert Meetup"
-    },
-    {
-      "start": "17:00",
-      "end": "17:30",
-      "subject": "Event Wrap-Up"
-    }
-  ]
-};
+// const numberOfEvents = [
+//   { month: 'Jan', flagship: 2, monthly: 4, weekly: 8 },
+//   { month: 'Feb', flagship: 1, monthly: 3, weekly: 10 },
+//   { month: 'Mar', flagship: 3, monthly: 5, weekly: 12 },
+//   { month: 'Apr', flagship: 2, monthly: 4, weekly: 9 },
+//   { month: 'May', flagship: 4, monthly: 6, weekly: 15 },
+//   { month: 'Jun', flagship: 3, monthly: 5, weekly: 11 },
+//   { month: 'Jul', flagship: 2, monthly: 4, weekly: 13 },
+//   { month: 'Aug', flagship: 5, monthly: 7, weekly: 16 },
+//   { month: 'Sep', flagship: 4, monthly: 6, weekly: 14 },
+//   { month: 'Oct', flagship: 3, monthly: 5, weekly: 12 },
+//   { month: 'Nov', flagship: 2, monthly: 4, weekly: 10 },
+//   { month: 'Dec', flagship: 6, monthly: 8, weekly: 18 },
+// ];
 
-const chartData = [
 
-  { month: "Jun", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
-  { month: "Jul", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
-  { month: "Aug", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
-  { month: "Sept", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
-  { month: "Oct", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
-  { month: "Nov", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
-  { month: "Dec", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
-]
+// const scheduledData: { [key: string]: ScheduleEvent[]} = {
+//   "2024-09-21": [
+//     {
+//       "start": "9:00",
+//       "end": "9:30",
+//       "subject": "Interview Call for Freshers"
+//     },
+//     {
+//       "start": "10:00",
+//       "end": "10:30",
+//       "subject": "Interview Call for Freshers"
+//     },
+//     {
+//       "start": "11:00",
+//       "end": "11:30",
+//       "subject": "Interview Call for Freshers"
+//     },
+//     {
+//       "start": "12:00",
+//       "end": "12:30",
+//       "subject": "Interview Call for Freshers"
+//     },
+//     {
+//       "start": "13:00",
+//       "end": "13:30",
+//       "subject": "Interview Call for Freshers"
+//     },
+//     {
+//       "start": "14:00",
+//       "end": "14:30",
+//       "subject": "Interview Call for Freshers"
+//     },
+//     {
+//       "start": "15:00",
+//       "end": "15:30",
+//       "subject": "Interview Call for Freshers"
+//     },
+//     {
+//       "start": "16:00",
+//       "end": "16:30",
+//       "subject": "Interview Call for Freshers"
+//     },
+//     {
+//       "start": "17:00",
+//       "end": "17:30",
+//       "subject": "Interview Call for Freshers"
+//     }
+//   ],
+//   "2024-09-22": [
+//     {
+//       "start": "9:00",
+//       "end": "9:30",
+//       "subject": "Art Exhibition Setup"
+//     },
+//     {
+//       "start": "10:00",
+//       "end": "10:30",
+//       "subject": "Art Exhibition Opening"
+//     },
+//     {
+//       "start": "11:00",
+//       "end": "11:30",
+//       "subject": "Guided Tour"
+//     },
+//     {
+//       "start": "12:00",
+//       "end": "12:30",
+//       "subject": "Guest Speaker Session"
+//     },
+//     {
+//       "start": "13:00",
+//       "end": "13:30",
+//       "subject": "Artist Meet & Greet"
+//     },
+//     {
+//       "start": "14:00",
+//       "end": "14:30",
+//       "subject": "Art Exhibition Main Event",
+//       "location": "Art Gallery",
+//       "organizer": "Cultural Society"
+//     },
+//     {
+//       "start": "15:00",
+//       "end": "15:30",
+//       "subject": "Live Painting Demo"
+//     },
+//     {
+//       "start": "16:00",
+//       "end": "16:30",
+//       "subject": "Closing Ceremony"
+//     },
+//     {
+//       "start": "17:00",
+//       "end": "17:30",
+//       "subject": "Exhibition Wrap-Up"
+//     }
+//   ],
+//   "2024-09-23": [
+//     {
+//       "start": "9:00",
+//       "end": "9:30",
+//       "subject": "AI Workshop Setup"
+//     },
+//     {
+//       "start": "10:00",
+//       "end": "10:30",
+//       "subject": "Introduction to AI"
+//     },
+//     {
+//       "start": "11:00",
+//       "end": "11:30",
+//       "subject": "AI Workshop Session 1",
+//       "location": "Room 204",
+//       "organizer": "Tech Club"
+//     },
+//     {
+//       "start": "12:00",
+//       "end": "12:30",
+//       "subject": "AI Tools Overview"
+//     },
+//     {
+//       "start": "13:00",
+//       "end": "13:30",
+//       "subject": "Lunch Break"
+//     },
+//     {
+//       "start": "14:00",
+//       "end": "14:30",
+//       "subject": "AI Workshop Session 2"
+//     },
+//     {
+//       "start": "15:00",
+//       "end": "15:30",
+//       "subject": "Hands-on AI Project"
+//     },
+//     {
+//       "start": "16:00",
+//       "end": "16:30",
+//       "subject": "AI in Industry Discussion"
+//     },
+//     {
+//       "start": "17:00",
+//       "end": "17:30",
+//       "subject": "Workshop Closing Remarks"
+//     }
+//   ],
+//   "2024-09-24": [
+//     {
+//       "start": "9:00",
+//       "end": "9:30",
+//       "subject": "Music Fest Setup"
+//     },
+//     {
+//       "start": "10:00",
+//       "end": "10:30",
+//       "subject": "Sound Check"
+//     },
+//     {
+//       "start": "11:00",
+//       "end": "11:30",
+//       "subject": "Band Rehearsal"
+//     },
+//     {
+//       "start": "12:00",
+//       "end": "12:30",
+//       "subject": "Stage Setup"
+//     },
+//     {
+//       "start": "13:00",
+//       "end": "13:30",
+//       "subject": "Lunch Break"
+//     },
+//     {
+//       "start": "14:00",
+//       "end": "14:30",
+//       "subject": "Guest Artist Performance"
+//     },
+//     {
+//       "start": "15:00",
+//       "end": "15:30",
+//       "subject": "Main Music Fest",
+//       "location": "Auditorium",
+//       "organizer": "Music Society"
+//     },
+//     {
+//       "start": "16:00",
+//       "end": "16:30",
+//       "subject": "Band Performance"
+//     },
+//     {
+//       "start": "17:00",
+//       "end": "17:30",
+//       "subject": "Closing Act"
+//     }
+//   ],
+//   "2024-09-25": [
+//     {
+//       "start": "9:00",
+//       "end": "9:30",
+//       "subject": "Hackathon Kickoff",
+//       "location": "Lab 101",
+//       "organizer": "Coding Club"
+//     },
+//     {
+//       "start": "10:00",
+//       "end": "10:30",
+//       "subject": "Team Formation"
+//     },
+//     {
+//       "start": "11:00",
+//       "end": "11:30",
+//       "subject": "Problem Statement Release"
+//     },
+//     {
+//       "start": "12:00",
+//       "end": "12:30",
+//       "subject": "Coding Begins"
+//     },
+//     {
+//       "start": "13:00",
+//       "end": "13:30",
+//       "subject": "Lunch Break"
+//     },
+//     {
+//       "start": "14:00",
+//       "end": "14:30",
+//       "subject": "Coding Continues"
+//     },
+//     {
+//       "start": "15:00",
+//       "end": "15:30",
+//       "subject": "Progress Check"
+//     },
+//     {
+//       "start": "16:00",
+//       "end": "16:30",
+//       "subject": "Mentorship Session"
+//     },
+//     {
+//       "start": "17:00",
+//       "end": "17:30",
+//       "subject": "Day 1 Wrap-Up"
+//     }
+//   ],
+//   "2024-09-26": [
+//     {
+//       "start": "9:00",
+//       "end": "9:30",
+//       "subject": "Drama Rehearsal Setup"
+//     },
+//     {
+//       "start": "10:00",
+//       "end": "10:30",
+//       "subject": "Scene 1 Rehearsal"
+//     },
+//     {
+//       "start": "11:00",
+//       "end": "11:30",
+//       "subject": "Scene 2 Rehearsal"
+//     },
+//     {
+//       "start": "12:00",
+//       "end": "12:30",
+//       "subject": "Scene 3 Rehearsal"
+//     },
+//     {
+//       "start": "13:00",
+//       "end": "13:30",
+//       "subject": "Lunch Break"
+//     },
+//     {
+//       "start": "14:00",
+//       "end": "14:30",
+//       "subject": "Scene 4 Rehearsal"
+//     },
+//     {
+//       "start": "15:00",
+//       "end": "15:30",
+//       "subject": "Scene 5 Rehearsal"
+//     },
+//     {
+//       "start": "16:00",
+//       "end": "16:30",
+//       "subject": "Full Dress Rehearsal",
+//       "location": "Main Stage",
+//       "organizer": "Drama Club"
+//     },
+//     {
+//       "start": "17:00",
+//       "end": "17:30",
+//       "subject": "Rehearsal Wrap-Up"
+//     }
+//   ],
+//   "2024-09-27": [
+//     {
+//       "start": "9:00",
+//       "end": "9:30",
+//       "subject": "Networking Event Setup"
+//     },
+//     {
+//       "start": "10:00",
+//       "end": "10:30",
+//       "subject": "Keynote Speech"
+//     },
+//     {
+//       "start": "11:00",
+//       "end": "11:30",
+//       "subject": "Panel Discussion"
+//     },
+//     {
+//       "start": "12:00",
+//       "end": "12:30",
+//       "subject": "Networking Session 1"
+//     },
+//     {
+//       "start": "13:00",
+//       "end": "13:30",
+//       "subject": "Lunch Break"
+//     },
+//     {
+//       "start": "14:00",
+//       "end": "14:30",
+//       "subject": "Networking Session 2"
+//     },
+//     {
+//       "start": "15:00",
+//       "end": "15:30",
+//       "subject": "Main Networking Event",
+//       "location": "Conference Room",
+//       "organizer": "Professional Society"
+//     },
+//     {
+//       "start": "16:00",
+//       "end": "16:30",
+//       "subject": "Industry Expert Meetup"
+//     },
+//     {
+//       "start": "17:00",
+//       "end": "17:30",
+//       "subject": "Event Wrap-Up"
+//     }
+//   ]
+// };
+
+// const chartData = [
+
+//   { month: "Jun", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
+//   { month: "Jul", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
+//   { month: "Aug", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
+//   { month: "Sept", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
+//   { month: "Oct", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
+//   { month: "Nov", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
+//   { month: "Dec", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
+// ]
 
 
 
@@ -474,84 +489,84 @@ const Page = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [schedule, setSchedule] = useState<ScheduleEvent[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [user, setUser] = useState(null);
-  const [counts, setCounts] = useState(null); 
-  const [error, setError] = useState(''); 
-  const [loading, setLoading] = useState(true); 
-  const [eventcounts,setEventcounts]= useState(null);
-  const [eventloading,setEventloading]= useState(true);
-  const [events,setEvents] = useState([]);
+  const [user, setUser] = useState<any>(null);
+  const [counts, setCounts] = useState<any>(null); 
+  // const [error, setError] = useState(''); 
+  // const [loading, setLoading] = useState(true); 
+  const [eventcounts,setEventcounts]= useState<any>(null);
+  // const [eventloading,setEventloading]= useState(true);
+  const [events,setEvents] = useState<any[]>([]);
   const router = useRouter();
 
   const handleModalToggle = () => {
     setIsModalOpen(!isModalOpen);
   };
+
+  
   useEffect(() => {
+    const loading = toast.loading("loading...");
+  
     const fetchCounts = async () => {
       try {
         const response = await fetch('http://localhost:4000/api/entity-counts');
         const data = await response.json();
-  
         if (data.success) {
           setCounts(data.data); // Set the counts in state
         } else {
-          setError('Failed to fetch data');
+          toast.error("Some error occurred while fetching counts");
         }
-        
       } catch (err) {
         console.error('Error fetching counts:', err);
-        setError('An error occurred while fetching the data.');
-      } finally {
-        setLoading(false); // Disable loading after data is fetched
+        toast.error("Some error occurred while fetching counts");
       }
     };
-
-    fetchCounts();
-  }, []);
-  useEffect(() => {
+  
     const fetchEvents = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/event/events');
+        const response = await fetch('http://localhost:4000/api/event/getAllEvents');
         const data = await response.json();
-  
         if (data.success) {
-          setEvents(data.events);
+          setEvents(data.events); // Set the events in state
         } else {
-          setError('Failed to fetch data');
+          toast.error("Some error occurred while fetching events");
         }
-        
       } catch (err) {
         console.error('Error fetching events:', err);
-        setError('An error occurred while fetching the data.');
-      } finally {
-        setLoading(false); // Disable loading after data is fetched
+        toast.error("Some error occurred while fetching events");
       }
     };
-
-    fetchEvents();
-  }, []);
-  useEffect(() => {
+  
     const fetchEventCount = async () => {
       try {
         const response = await fetch('http://localhost:4000/api/event-counts');
         const data = await response.json();
-  
         if (data.success) {
-          setEventcounts(data.data); 
+          setEventcounts(data.data); // Set the event counts in state
         } else {
-          setError('Failed to fetch data');
+          toast.error("Error fetching event counts");
         }
-        
       } catch (err) {
         console.error('Error fetching event counts:', err);
-        setError('An error occurred while fetching the data.');
-      } finally {
-        setLoading(false); // Disable loading after data is fetched
+        toast.error("Some error occurred while fetching event counts");
       }
     };
-
-    fetchEventCount();
+  
+  
+    const fetchData = async () => {
+      await Promise.all([fetchCounts(), fetchEvents(), fetchEventCount()]);
+      toast.dismiss(loading);
+    };
+  
+    fetchData();
+    
   }, []);
+  
+  const signOut = () => {
+    localStorage.removeItem('token');
+    router.push('/login');
+  };
+
+ 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -570,10 +585,14 @@ const Page = () => {
     }
   }, [router]);
 
+  console.log(user);
 
+  if(user && user.role!="Central Office"){
+    router.push('/login');
+  }
  
-  if (!user) return <p>Loading...</p>;
-  if (!counts) return <p>Loading...</p>;
+  if (!user) return <div></div>;
+  if (!counts) return <div></div>;
     return (
       
       <div className='flex w-screen '>
@@ -583,20 +602,29 @@ const Page = () => {
             <p className='text-3xl font-semibold'>{user.name}</p>
           </div>
           <div className='p-3 flex flex-col gap-5'>
-            {
-              sidebarData.map((data, index) => (
-                <div key={index} className='flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]'>
-                  <Image src={data.icon} alt={data.text} />
-                  <p>{data.text}</p>
-                </div>
-              ))
-            }
+          {sidebarData.map((data, index) => (
+            data.text === "signout" ? (
+              <button 
+                key={index} 
+                onClick={signOut} 
+                className='flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]'
+              >
+                <Image src={data.icon} alt={data.text} />
+                <p>{data.text}</p>
+              </button>
+            ) : (
+              <Link href={data.link} key={index} className='flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]'>
+                <Image src={data.icon} alt={data.text} />
+                <p>{data.text}</p>
+              </Link>
+            )
+          ))}
           </div>
         </div>
   
         <div className='w-full flex flex-col pb-20'>
           <div className='Navbar flex w-full h-[100px]  items-center justify-between px-3'>
-            <div className='flex gap-2 px-5 py-5 h-[60px] bg-[#F9FAFB] rounded-2xl'>
+            <div className='flex gap-2 px-5 py-3 h-[60px] bg-[#F9FAFB] w-8/12 rounded-2xl'>
               <Image src={search} alt="search" className='w-[24px] h-[24px]' />
               <input placeholder='Search' className='outline-none bg-[#F9FAFB] w-[300px]' />
             </div>
@@ -775,13 +803,25 @@ const Page = () => {
 
               <Image src={rectanglefilled} alt="filledrectangle" className='w-[63.22px] h-[60px]' />
   
-              <div className='flex items-start'></div>
+            
               <div>
-                <p className='font-semibold'>{user.name}</p>
-                <p className='text-slate-400'>Admin</p>
+                <p className='font-semibold'>{user.name.length > 7 ? `${user.name.slice(0, 7)}...` : user.name}</p>
+                <p className='text-slate-400'>Central Office</p>
               </div>
   
-              <Image src={arrowhead} alt="profile" className='w-[16.86px] h-[16px] mt-3 hover:cursor-pointer' />
+              {user.name.length > 7 && (
+
+<Popover>
+<PopoverTrigger><Image 
+      src={arrowhead} 
+      alt="profile" 
+      className='w-[16.86px] h-[16px] mt-3 hover:cursor-pointer' 
+         /></PopoverTrigger>
+<PopoverContent>{user.name}</PopoverContent>
+</Popover>
+           
+  )}
+          
             </div>
           </div>
 
@@ -846,46 +886,7 @@ const Page = () => {
  
 </div>
 </div>
- 
-</div>
-
-
-            <div className='w-full flex gap-6 px-10 py-7'>
-    
-            <div className='eventApproval-section shadow-md  rounded-2xl w-8/12 px-7 py-5'>
-              <h2 className="text-2xl font-semibold mb-4">Event Approval</h2>
-              <table className="w-full bg-white ">
-                <thead className="">
-                  <tr>
-                    <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Name</th>
-                    <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Date Punched</th>
-                    <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Event type</th>
-                    <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left"></th> 
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    events.map((event, index) => (
-                      <tr key={index} className="border-b px-2">
-                        <td className="py-3 text-sm px-6 font-light">{event.name}</td>
-                        <td className="py-3 text-sm px-6 font-light">{event.date}</td>
-                        <td className="py-3 text-sm px-6 font-light">{event.Eventtype}</td>
-                        <td className="py-3 px-6 ">
-                          <Link href="/">
-                          <button className="bg-[#F0F9FF]  text-[#89868D] text-sm px-3 py-2 rounded-xl  border boorder-[#0095FF]">
-                           View
-                          </button>
-                          </Link>
-                        </td>
-                      </tr>
-                    ))
-                  }
-                </tbody>
-              </table>
-            </div>
-
-            <div className="w-5/12 shadow-lg rounded-2xl flex flex-col space-y-8 p-4">
-  <div className="bg-blue-100 p-4 rounded-lg shadow-sm ">
+<div className="bg-blue-100 p-10 rounded-lg shadow-sm ">
     <p className="text-lg font-semibold mb-2">Urgent Tasks</p>
     <div className="space-y-2">
       <div className="flex items-center space-x-2">
@@ -911,41 +912,52 @@ const Page = () => {
       </div>
     </div>
   </div>
-
-  <div className="bg-white p-4 rounded-lg shadow-sm">
-    <p className="text-lg font-semibold mb-2">Quick Tasks</p>
-    <div className="space-y-2">
-      <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Event Approval</p>
-          <p className="text-sm text-gray-500">15 Notifications</p>
-        </div>
-        
-      </div>
-      <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Entity Approval</p>
-          <p className="text-sm text-gray-500">15 Notifications</p>
-        </div>
-        
-      </div>
-      <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Finance Approval</p>
-          <p className="text-sm text-gray-500">15 Notifications</p>
-        </div>
-        
-      </div>
-    </div>
-  </div>
 </div>
 
 
+            <div className='w-full flex gap-6 px-10 py-7'>
+    
+            <div className='eventApproval-section shadow-md rounded-2xl w-full px-7 py-5'>
+              <h2 className="text-2xl font-semibold mb-4">Event Approval</h2>
+              <table className="w-full bg-white ">
+                <thead className="">
+                  <tr>
+                    <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Name</th>
+                    <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Date Punched</th>
+                    <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Event type</th>
+                    <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Venue</th>
+                    <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left"></th> 
+                  </tr>
+                </thead>
+                <tbody>
+                {
+  events.map((event, index) => (
+    <tr key={index} className="border-b px-2">
+      <td className="py-3 text-sm px-6 font-light">{event.name}</td>
+      <td className="py-3 text-sm px-6 font-light">
+        {new Date(event.date).toLocaleDateString('en-GB')}
+      </td>
+      <td className="py-3 text-sm px-6 font-light">{event.Eventtype}</td>
+      <td className="py-3 text-sm px-6 font-light">{event.venue}</td>
+      <td className="py-3 px-6">
+        <Link href="/">
+          <button className="bg-[#F0F9FF]  text-[#89868D] text-sm px-3 py-2 rounded-xl  border border-[#0095FF]">
+            View
+          </button>
+        </Link>
+      </td>
+    </tr>
+  ))
+}
+
+                </tbody>
+              </table>
             </div>
 
+
+
+            </div>
+{/* 
             <div className='w-9/12  rounded-2xl shadow-lg px-10 py-7'>
               <p className='py-7 text-2xl font-bold'>Active Entities</p>
   <ChartContainer config={chartConfig} className="min-h-[150px] w-full">
@@ -990,20 +1002,23 @@ const Page = () => {
           <Line type="monotone" dataKey="weekly" stroke="#0000FF" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
-    </div>
 
 
-          </div>
           
 
-          <div className='calender_section flex flex-col justify-start items-center px-3 bg-slate-100 rounded-lg'>
+         
+ */}
+     </div>
+
+ 
+     <div className='calender_section flex flex-col justify-start items-center px-3 bg-slate-100 rounded-lg'>
           <Calendar
       mode="single"
       selected={date}
       onSelect={setDate}
       className="rounded-md "
     />
-<div className='w-full py-3 rounded-lg bg-white '>
+    <div className='w-full py-3 rounded-lg bg-white '>
     <div className=' w-full flex justify-between px-3'>
     <p>{date?.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</p>
       <div className='bg-[#0095FF] w-[35px] h-[36px] rounded-lg flex items-center justify-center hover:cursor-pointer'>
@@ -1011,7 +1026,6 @@ const Page = () => {
       </div>
 
     </div>
-
 <div className='schedule-section w-full mt-6 flex flex-col justify-start gap-6 px-2'>
   {schedule.length > 0 ? (
     schedule.map((data, index) => (
@@ -1040,7 +1054,7 @@ const Page = () => {
   
           
         </div>
-      </div>
+        </div>
     )
   }
   

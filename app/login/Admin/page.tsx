@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import logo from '../../images/loginpageicon2.png';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const Page = () => {
   const [loginData, setLoginData] = useState({ userID: '', password: '' });
@@ -12,7 +13,7 @@ const Page = () => {
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(''); // Clear any previous error
+    const toastId = toast.loading("Logging in...");
 
     try {
       const response = await fetch('http://localhost:4000/api/login/login', {
@@ -28,19 +29,24 @@ const Page = () => {
       if (data.success) {
         // Store JWT token in localStorage or cookies
         localStorage.setItem('token', data.token);
+        toast.dismiss(toastId); // dismiss loading toast
+        toast.success("Logged in successfully");
 
         // Redirect based on role
         if (data.role === 'Student Rep') {
-          router.push('/student-dashboard');
+          router.push('/StudentRepresentative');
         } else if (data.role === 'Faculty') {
-          router.push('/faculty-dashboard');
+          router.push('/FacultyAdvisor');
         } else if (data.role === 'Central Office') {
           router.push('/centralOffice');
         }
       } else {
-        setError(data.message);
+        toast.dismiss(toastId); // dismiss loading toast
+        toast.error("Login failed! Please retry.");
       }
     } catch (err) {
+      toast.dismiss(toastId); // dismiss loading toast
+      toast.error("Something went wrong. Please try again.");
       setError('Something went wrong. Please try again.');
     }
   };
@@ -83,7 +89,7 @@ const Page = () => {
 
         <button
           onClick={submitHandler}
-          className='w-6/12 bg-[#D91F23] font-bold flex justify-center text-white rounded-full py-5 text-2xl'
+          className='w-6/12 bg-[#D91F23] hover:cursor-pointer font-bold flex justify-center text-white rounded-full py-5 text-2xl'
         >
           Login
         </button>
