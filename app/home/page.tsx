@@ -3,6 +3,7 @@ import Header from './components/header'
 import Sidebar from './components/sidebar'
 import QuickMenu from './components/quickmenu'
 import Slider from './components/slider'
+import DiscussionForum from './components/discussionforum'
 
 type Props = {}
 
@@ -17,6 +18,9 @@ export default function Home({}: Props) {
                 <div className="flex flex-row">
                     <div className="w-[60%] rounded-3xl overflow-hidden">
                         <Slider/>
+                    </div>
+                    <div className="w-[40%] grid place-items-center">
+                        <DiscussionForum/>
                     </div>
                 </div>
             </div>
