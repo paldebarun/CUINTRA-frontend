@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 type Props = {}
 
-export default function ranking({}: Props) {
+export default function Ranking({}: Props) {
   return (
     <div className="w-full">
         <Image src='/ranking.png' alt="ranking" height={100} width={100} />
