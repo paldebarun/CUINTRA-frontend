@@ -25,7 +25,7 @@ export default function Home({}: Props) {
                 </div>
                 <div className="flex flex-row space-x-6">
                     <div className="w-[30%] rounded-[50px] overflow-hidden h-[350px]">
-                        <Slider/>
+                    
                     </div>
                     <div className="w-[70%] grid place-items-center">
                         <DiscussionForum/>
