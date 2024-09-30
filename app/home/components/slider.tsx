@@ -66,7 +66,7 @@ export default function Slider() {
 
   return (
     <section 
-      className="w-full h-[350px] bg flex flex-row justify-evenly relative overflow-hidden"
+      className="w-full h-full bg flex flex-row justify-evenly relative overflow-hidden"
     //   style={{
     //     backgroundImage: `url(${slides[currentSlide].image})`,
     //     backgroundSize: 'cover',
