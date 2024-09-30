@@ -16,7 +16,7 @@ export default function Home({}: Props) {
             <div className="flex flex-col justify-center h-full w-full p-6 space-y-6">
                 <QuickMenu/>
                 <div className="flex flex-row">
-                    <div className="w-[60%] rounded-3xl overflow-hidden bg-red-600 h-[350px]">
+                    <div className="w-[60%] rounded-3xl overflow-hidden h-[350px]">
                         <Slider/>
                     </div>
                     <div className="w-[40%] grid place-items-center">
