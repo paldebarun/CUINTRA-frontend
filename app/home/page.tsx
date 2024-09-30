@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './components/header'
 import Sidebar from './components/sidebar'
 import QuickMenu from './components/quickmenu'
+import Slider from './components/slider'
 
 type Props = {}
 
@@ -13,6 +14,11 @@ export default function Home({}: Props) {
             <Sidebar/>
             <div className="flex flex-col justify-center h-full w-full">
                 <QuickMenu/>
+                <div className="flex flex-row">
+                    <div className="w-2/3">
+                        <Slider/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
