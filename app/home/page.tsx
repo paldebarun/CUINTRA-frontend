@@ -14,7 +14,7 @@ export default function Home({}: Props) {
         <Header/>
         <div className="flex flex-row h-full w-full">
             <Sidebar/>
-            <div className="flex flex-col justify-center h-full w-full p-6 space-y-6">
+            <div className="flex flex-col justify-center w-full h-screen overflow-scroll pt-[350px] p-6 space-y-6">
                 <QuickMenu/>
                 <div className="flex flex-row space-x-6">
                     <div className="w-[60%] rounded-[50px] overflow-hidden h-[350px]">
