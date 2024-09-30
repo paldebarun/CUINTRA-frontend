@@ -12,7 +12,7 @@ interface QuickMenuItem {
 }
 
 const QuickMenuItem: React.FC<QuickMenuItem> = ({ title, subtitle, icon, action }) => (
-    <div className="bg-gradient-to-r from-[#6fa8e7] to-[#194d95] text-white p-4 py-8 flex flex-col items-center justify-center text-center rounded-3xl">
+    <div className="bg-gradient-to-r from-[#6fa8e7] to-[#194d95] text-white p-4 py-8 flex flex-col items-center justify-center text-center rounded-3xl shadow-lg">
         {icon && <div className="text-4xl mb-2">{icon}</div>}
         {subtitle && <div className="text-3xl font-bold mb-1">{subtitle}</div>}
         <h3 className="text-lg font-semibold mb-2">{title}</h3>
