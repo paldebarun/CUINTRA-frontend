@@ -77,10 +77,10 @@ export default function Slider() {
       <div className="absolute inset-0 bg-black bg-opacity-50" />
       <div className="relative z-10 flex flex-row justify-evenly items-end w-full">
         <Image src='/landing-image.png' alt='landing' width={700} height={700} className='h-[95%] w-auto'/>
-        <div className="flex flex-col justify-center items-start h-full">
-          <h3 className='inter-bold text-white text-6xl' dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }}></h3>
-          <p className="text-white text-lg inter-medium max-w-[550px] my-12">{slides[currentSlide].description}</p>
-          <button className='inter-semibold text-white text-lg px-8 py-3 rounded-xl shadow-md bg-[#FBB03B] transition-all hover:bg-[#fff] hover:text-[#FBB03B]'>Explore More</button>
+        <div className="flex flex-col justify-center items-start h-full pb-4">
+          <h3 className='inter-bold text-white text-4xl' dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }}></h3>
+          <p className="text-white text-base inter-medium max-w-[400px] my-6">{slides[currentSlide].description}</p>
+          <button className='inter-semibold text-white text-base px-4 py-2 rounded-xl shadow-md bg-[#FBB03B] transition-all hover:bg-[#fff] hover:text-[#FBB03B]'>Explore More</button>
         </div>
       </div>
       <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex z-20">
@@ -91,7 +91,7 @@ export default function Slider() {
             <button
               key={index}
               className={`rounded-full cursor-pointer z-20 transition-all duration-300 ${
-                currentSlide === index ? 'w-4 h-4 bg-white' : 'w-3 h-3 bg-white/50 hover:bg-white/75'
+                currentSlide === index ? 'w-3 h-3 bg-white' : 'w-2 h-2 bg-white/50 hover:bg-white/75'
               }`}
               style={{
                 transform: `translateX(${translateX}px)`,
