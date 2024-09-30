@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import '../../landing/styles/landing.css'
 
 type SlideData = {
   image: string
@@ -65,7 +66,7 @@ export default function Slider() {
 
   return (
     <section 
-      className="w-full h-screen bg flex flex-row justify-evenly relative overflow-hidden"
+      className="w-full h-[300px] bg flex flex-row justify-evenly relative overflow-hidden"
     //   style={{
     //     backgroundImage: `url(${slides[currentSlide].image})`,
     //     backgroundSize: 'cover',
