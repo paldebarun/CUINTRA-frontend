@@ -5,8 +5,8 @@ type Props = {}
 
 export default function Ranking({}: Props) {
   return (
-    <div className="w-full">
-        <Image src='/ranking.png' alt="ranking" height={100} width={100} />
+    <div className="w-full h-full">
+        <Image src='/ranking.png' alt="ranking" layout='cover' width={1000} height={1000} className='h-full w-full' />
     </div>
   )
 }
