@@ -25,10 +25,10 @@ export default function Home({}: Props) {
                     </div>
                 </div>
                 <div className="flex flex-row space-x-6">
-                    <div className="w-[30%] rounded-[50px] overflow-hidden h-[350px]">
+                    <div className="w-[40%] rounded-[50px] overflow-hidden h-[370px]">
                         <Ranking/>
                     </div>
-                    <div className="w-[70%] grid place-items-center">
+                    <div className="w-[60%] grid place-items-center">
                         <DiscussionForum/>
                     </div>
                 </div>
