@@ -12,7 +12,7 @@ export default function Home({}: Props) {
         <Header/>
         <div className="flex flex-row h-full w-full">
             <Sidebar/>
-            <div className="flex flex-col justify-center h-full w-full">
+            <div className="flex flex-col justify-center h-full w-full p-6 space-y-6">
                 <QuickMenu/>
                 <div className="flex flex-row">
                     <div className="w-2/3">
