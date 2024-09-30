@@ -11,7 +11,7 @@ type Props = {}
 
 export default function Home({}: Props) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-[#FEFEFE]">
         <Header/>
         <div className="flex flex-row h-full w-full">
             <Sidebar/>
@@ -26,7 +26,7 @@ export default function Home({}: Props) {
                     </div>
                 </div>
                 <div className="flex flex-row space-x-6">
-                    <div className="w-[40%] rounded-[50px] overflow-hidden h-[370px]">
+                    <div className="w-[40%] rounded-[50px] shadow-lg overflow-hidden h-[370px]">
                         <Ranking/>
                     </div>
                     <div className="w-[60%] grid place-items-center">
