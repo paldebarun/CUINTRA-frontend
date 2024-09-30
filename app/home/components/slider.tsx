@@ -27,14 +27,14 @@ const slides: SlideData[] = [
     description: 'Relive the best moments from previous CU FEST editions. Get ready for an even more spectacular celebration of art, music, and culture this year.',
   },
   {
-    image: '/landing-image-3.png',
-    title: 'CU FEST <span class="text-[#FBB03B]">Highlights</span>',
-    description: 'Relive the best moments from previous CU FEST editions. Get ready for an even more spectacular celebration of art, music, and culture this year.',
+    image: '/landing-image.png',
+    title: 'CU FEST <span class="text-[#FBB03B]">2024</span>',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur luctus, tellus ac volutpat sollicitudin, risus nibh facilisis sapien, eu consectetur arcu ipsum in ipsum.',
   },
   {
-    image: '/landing-image-3.png',
-    title: 'CU FEST <span class="text-[#FBB03B]">Highlights</span>',
-    description: 'Relive the best moments from previous CU FEST editions. Get ready for an even more spectacular celebration of art, music, and culture this year.',
+    image: '/landing-image-2.png',
+    title: 'CU FEST <span class="text-[#FBB03B]">Events</span>',
+    description: 'Discover exciting performances, workshops, and cultural showcases at CU FEST 2024. Join us for an unforgettable experience of talent and creativity.',
   },
   {
     image: '/landing-image-3.png',
@@ -79,7 +79,7 @@ export default function Slider() {
         <Image src='/landing-image.png' alt='landing' width={700} height={700} className='h-[95%] w-auto'/>
         <div className="flex flex-col justify-center items-start h-full pb-4">
           <h3 className='inter-bold text-white text-4xl' dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }}></h3>
-          <p className="text-white text-base inter-medium max-w-[400px] my-6">{slides[currentSlide].description}</p>
+          <p className="text-white text-base inter-medium max-w-[340px] text-justify my-6">{slides[currentSlide].description}</p>
           <button className='inter-semibold text-white text-base px-4 py-2 rounded-xl shadow-md bg-[#FBB03B] transition-all hover:bg-[#fff] hover:text-[#FBB03B]'>Explore More</button>
         </div>
       </div>
