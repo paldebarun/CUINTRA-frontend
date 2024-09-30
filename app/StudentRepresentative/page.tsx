@@ -39,7 +39,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 
 
@@ -786,13 +791,31 @@ const allEvents = await axios.get('http://localhost:4000/api/event/events-count-
 
           {/* User profile */}
           <div className='flex gap-3'>
-            <div className='w-[43.22px] h-[40px] relative'>
+          <TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger>
+      <div className='w-[43.22px] h-[40px] relative'>
               <Image src={rectanglehollow} alt="belliconbg" className='w-full h-full' />
               
       
-      <Image src={bellicon} alt="bellicon" className='absolute w-6/12 h-6/12 top-1/4 left-1/4' />
+              <Image src={bellicon} alt="bellicon" className='absolute w-6/12 h-6/12 top-1/4 left-1/4' />
               
             </div>
+            
+            </TooltipTrigger>
+    <TooltipContent>
+
+      <p>(notifications under development)</p>
+      <div>
+        {NotificationData.map((notification,index)=>(
+          <p key={index}>{notification}</p>
+        ))}
+      </div>
+    </TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+
+            
             <Image src={rectanglefilled} alt="filledrectangle" className='w-[63.22px] h-[60px]' />
             <div>
                 <p className='font-semibold'>{user.name.length > 7 ? `${user.name.slice(0, 7)}...` : user.name}</p>
