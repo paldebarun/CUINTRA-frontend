@@ -4,6 +4,7 @@ import Sidebar from './components/sidebar'
 import QuickMenu from './components/quickmenu'
 import Slider from './components/slider'
 import DiscussionForum from './components/discussionforum'
+import Ranking from './components/ranking'
 
 type Props = {}
 
@@ -25,7 +26,7 @@ export default function Home({}: Props) {
                 </div>
                 <div className="flex flex-row space-x-6">
                     <div className="w-[30%] rounded-[50px] overflow-hidden h-[350px]">
-                    
+                        <Ranking/>
                     </div>
                     <div className="w-[70%] grid place-items-center">
                         <DiscussionForum/>
