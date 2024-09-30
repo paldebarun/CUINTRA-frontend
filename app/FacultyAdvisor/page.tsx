@@ -101,24 +101,24 @@ const sidebarData=[
 ]
 
 
-interface Event {
-    name: string;
-    imageUrl: string;
-    entity: {
-      type: 'club' | 'community' | 'department-society' | 'professional-society';
-      id: ObjectId;
-    };
-    date: Date;
-    organizer: {
-      type: 'Cluster' | 'Department' | 'Institute';
-      id: ObjectId;
-    };
-    venue: string;
-    Eventtype: string;
-    category: string;
-    approval?: boolean;
-    featured?: boolean;  
-  }
+// interface Event {
+//     name: string;
+//     imageUrl: string;
+//     entity: {
+//       type: 'club' | 'community' | 'department-society' | 'professional-society';
+//       id: ObjectId;
+//     };
+//     date: Date;
+//     organizer: {
+//       type: 'Cluster' | 'Department' | 'Institute';
+//       id: ObjectId;
+//     };
+//     venue: string;
+//     Eventtype: string;
+//     category: string;
+//     approval?: boolean;
+//     featured?: boolean;  
+//   }
 
 const EntityData = [
   {

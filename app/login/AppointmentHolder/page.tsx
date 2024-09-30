@@ -56,8 +56,12 @@ const Page = () => {
 
         // Redirect based on role
         if (data.role === 'Student Rep') {
+          localStorage.setItem('entity',data.user.club);
+
           router.push('/StudentRepresentative');
         } else if (data.role === 'Faculty') {
+          localStorage.setItem('entity',data.user.club);
+
           router.push('/FacultyAdvisor');
         } else if (data.role === 'Central Office') {
           router.push('/centralOffice');

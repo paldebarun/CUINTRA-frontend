@@ -8,6 +8,8 @@ import toast from 'react-hot-toast';
 
 const Page = () => {
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
+  
+
 
   // Function to handle screen size
   const handleResize = () => {
@@ -32,7 +34,7 @@ const Page = () => {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  const submitHandler = async (e: React.FormEvent) => {
+ const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     const toastId = toast.loading("Logging in...");
 
@@ -55,8 +57,12 @@ const Page = () => {
 
         // Redirect based on role
         if (data.role === 'Student Rep') {
+          localStorage.setItem('entity',data.user.club);
+
           router.push('/StudentRepresentative');
         } else if (data.role === 'Faculty') {
+          localStorage.setItem('entity',data.user.club);
+
           router.push('/FacultyAdvisor');
         } else if (data.role === 'Central Office') {
           router.push('/centralOffice');
@@ -71,7 +77,9 @@ const Page = () => {
       setError('Something went wrong. Please try again.');
     }
   };
-
+   
+  
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginData((prevData) => ({
