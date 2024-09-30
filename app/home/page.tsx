@@ -10,7 +10,7 @@ type Props = {}
 
 export default function Home({}: Props) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full">
         <Header/>
         <div className="flex flex-row h-full w-full">
             <Sidebar/>
