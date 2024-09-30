@@ -6,6 +6,7 @@ import Slider from './components/slider'
 import DiscussionForum from './components/discussionforum'
 import Ranking from './components/ranking'
 import './styles/home.css'
+import Memories from './components/memories'
 
 type Props = {}
 
@@ -30,7 +31,7 @@ export default function Home({}: Props) {
                         <Ranking/>
                     </div>
                     <div className="w-[60%] grid place-items-center">
-                        <DiscussionForum/>
+                        <Memories/>
                     </div>
                 </div>
             </div>
