@@ -5,7 +5,7 @@ import Landing from './components/landing'
 
 type Props = {}
 
-export default function Home({}: Props) {
+export default function Landing({}: Props) {
   return (
     <>
         <div className="flex flex-col">
