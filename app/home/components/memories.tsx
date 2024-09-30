@@ -2,74 +2,36 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import SwiperCont from './swiper'
 
 const images = [
-  '/placeholder.svg',
-  '/placeholder.svg',
-  '/placeholder.svg',
-  '/placeholder.svg',
+    '/memories.png',
+    '/memories.png',
+    '/memories.png',
+    '/memories.png',
 ]
 
 export default function Memories() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const touchStartX = useRef(0)
-  const touchEndX = useRef(0)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }, 3000)
+    return (
+        <>
+            <style jsx>{`
+        .grad {
+          background: linear-gradient(45deg, #6fa8e7 0%, #194d95 100%);
+        }
+        .blur-overlay {
+          background: linear-gradient(to bottom, transparent, white);
+        }
+      `}</style>
+            <div className="w-full">
 
-    return () => clearInterval(interval)
-  }, [])
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX
-  }
-
-  const handleTouchEnd = () => {
-    if (touchStartX.current - touchEndX.current > 50) {
-      // Swipe left
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    } else if (touchEndX.current - touchStartX.current > 50) {
-      // Swipe right
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length)
-    }
-  }
-
-  return (
-    <div className="w-full max-w-2xl mx-auto">
-      <div className="bg-blue-500 text-white text-xl font-bold py-3 px-4 rounded-t-lg text-center">
-        Memories & Adventures
-      </div>
-      <div 
-        className="bg-gray-100 p-4 rounded-b-lg overflow-hidden"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <div 
-          className="flex transition-transform duration-300 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          {images.map((src, index) => (
-            <div key={index} className="w-full flex-shrink-0">
-              <div className="aspect-w-16 aspect-h-9 relative rounded-lg overflow-hidden">
-                <Image
-                  src={src}
-                  alt={`Memory ${index + 1}`}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              </div>
+                <div className="grad rounded-t-[50px] text-white text-xl font-bold py-3 px-4 inter-medium text-center">
+                    Memories and Adventure
+                </div>
+                <div className="flex px-4 pt-4 h-[300px]">
+                    <SwiperCont />
+                </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
+        </>
+    )
 }

@@ -30,7 +30,7 @@ export default function Home({}: Props) {
                     <div className="w-[40%] rounded-[50px] shadow-lg overflow-hidden h-[370px]">
                         <Ranking/>
                     </div>
-                    <div className="w-[60%] grid place-items-center">
+                    <div className="w-[60%] rounded-[50px] shadow-lg overflow-hidden" >
                         <Memories/>
                     </div>
                 </div>
