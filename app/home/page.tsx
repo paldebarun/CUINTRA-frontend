@@ -10,6 +10,9 @@ export default function Home({}: Props) {
         <Header/>
         <div className="flex flex-row h-full w-full">
             <Sidebar/>
+            <div className="flex flex-col justify-center h-full w-full">
+                
+            </div>
         </div>
     </div>
   )
