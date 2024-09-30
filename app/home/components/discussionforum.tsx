@@ -47,10 +47,10 @@ const ForumItem: React.FC<ForumItem> = ({ name, action, icon }) => (
         <div className="flex items-center">
             <div className="w-10 h-10 rounded-full overflow-hidden mr-4">
                 <Image
-                    src="/placeholder.svg"
+                    src="/pfp.png"
                     alt={name}
-                    width={40}
-                    height={40}
+                    width={900}
+                    height={900}
                     className="object-cover"
                 />
             </div>
@@ -73,8 +73,8 @@ export default function DiscussionForum() {
           background: linear-gradient(45deg, #6fa8e7 0%, #194d95 100%);
         }
       `}</style>
-            <div className="w-full mx-auto p-4">
-                <div className="grad rounded-t-[50px] text-white text-xl font-bold py-3 px-4 inter-medium text-center">
+            <div className="w-full mx-auto p-4 rounded-[70px] overflow-hidden">
+                <div className="grad text-white text-xl font-bold py-3 px-4 inter-medium text-center">
                     Discussion forum
                 </div>
                 <div className="bg-gray-100 p-4 rounded-b-lg">
