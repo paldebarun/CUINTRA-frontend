@@ -31,6 +31,19 @@ import {
   // ChartTooltipContent,
 } from "@/components/ui/chart"
 
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
 import {
   Popover,
   PopoverContent,
@@ -628,7 +641,7 @@ const Page = () => {
     return (
       
       <div className='flex w-screen '>
-        <div className='sidebar  flex flex-col gap-6 w-1/5 h-screen'>
+        <div className='sidebar  flex flex-col gap-6 w-1/5 '>
           <div className='flex flex-col items-start px-10 py-4'>
             <p className='text-2xl '>Hello!</p>
             <p className='text-3xl font-semibold'>{user.name}</p>
@@ -664,6 +677,7 @@ const Page = () => {
             <div className='flex gap-3'>
               <div className='w-[43.22px] h-[40px] relative'>
                 <Image src={rectanglehollow} alt="belliconbg" className='w-full h-full' />
+                
                 <Image src={bellicon} alt="bellicon" className='absolute w-6/12 h-6/12 top-1/4 left-1/4' onClick={handleModalToggle} />
 
               </div>
@@ -1053,9 +1067,40 @@ const Page = () => {
     <div className='w-full py-3 rounded-lg bg-white '>
     <div className=' w-full flex justify-between px-3'>
     <p>{date?.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</p>
+
+    <Dialog>
+      <DialogTrigger asChild>
       <div className='bg-[#0095FF] w-[35px] h-[36px] rounded-lg flex items-center justify-center hover:cursor-pointer'>
         <Image src={plus} alt="add-schedule"/>
       </div>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add a task</DialogTitle>
+          <DialogDescription>
+            Add task in your schedule (under development)
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4 ">
+          <div className="grid grid-cols-4 items-center gap-4 py-2 px-1">
+            <Label htmlFor="name" className="text-right">
+              Task 
+            </Label>
+            <Input id="name" value="" placeholder='meeting' className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4 py-2 px-1">
+            <Label htmlFor="username" className="text-right">
+              Time
+            </Label>
+            <Input id="username" value="" placeholder='9:00 pm' className="col-span-3" />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button type="submit">Add</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+     
 
     </div>
 <div className='schedule-section w-full mt-6 flex flex-col justify-start gap-6 px-2'>

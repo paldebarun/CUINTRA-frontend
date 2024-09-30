@@ -11,6 +11,8 @@ import depsocicon from '../images/event_available.png'
 import profsocicon from '../images/reviews.png'
 import commicon from '../images/live_help.png'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const sidebarData=[
     {
@@ -41,6 +43,23 @@ export default function EntityLayout({
   }: {
     children: React.ReactNode
   }) {
+
+    const router=useRouter();
+    const [login,setLogin]=useState<boolean>(false);
+
+    useEffect(()=>{
+      const token = localStorage.getItem('token');
+      if (token) {
+        setLogin(true);
+      }
+    },[])
+
+    const logoutHandler=()=>{
+       localStorage.removeItem('token');
+       router.push('/login');
+    }
+   
+
     return <section className='w-full h-screen overflow-y-hidden'> 
         <div className='flex  py-4 px-5 bg-[#F0F1F6] justify-between shadow-lg'>
            <div className='flex gap-3 w-full'>
@@ -61,7 +80,9 @@ export default function EntityLayout({
             <Image src={home} alt="home" className='w-8 h-7 hover:cursor-pointer' />
             </Link>
             
-            <Link href="/login" className='bg-white px-7 py-2 rounded-full  border-2 border-slate-400'> login</Link>
+            {login ? <div onClick={logoutHandler} className='bg-white px-7 py-2 rounded-full  border-2 border-slate-400 hover:cursor-pointer'>
+                logout
+            </div>  :<Link href="/login" className='bg-white px-7 py-2 rounded-full  border-2 border-slate-400'> login</Link>}
            </div>
         </div>
         <div className='flex w-full'>

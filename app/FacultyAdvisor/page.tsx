@@ -783,7 +783,7 @@ const Page = () => {
             <Image src={rectanglefilled} alt="filledrectangle" className='w-[63.22px] h-[60px]' />
             <div>
                 <p className='font-semibold'>{user.name.length > 7 ? `${user.name.slice(0, 7)}...` : user.name}</p>
-                <p className='text-slate-400'>Central Office</p>
+                <p className='text-slate-400'>Faculty Advisor</p>
               </div>
   
               {user.name.length > 7 && (
@@ -803,10 +803,10 @@ const Page = () => {
         </div>
 
         {/* Dashboard Content */}
-        <div className='w-full flex px-10 py-7'>
+        <div className='w-full flex  px-10 py-7'>
           <div className='w-11/12 border-r-2'>
             {/* Entity Data */}
-            <div className="w-full h-auto flex gap-6 py-7 px-10">
+            <div className="w-full h-auto flex flex-wrap gap-6 py-7 px-10">
               {EntityData.map((entity, index) => (
                 <div key={index} className="w-[220px] h-auto p-4 rounded-2xl shadow-lg border border-blue-300">
                   <div className="flex items-center gap-2 mb-4">
@@ -855,44 +855,8 @@ const Page = () => {
       </div>
                   </div>
                 </div>
-
-            </div>
-
-            {/* Event Approval and Quick Tasks */}
-            <div className='w-full flex gap-6 px-10 py-7'>
-              {/* Event Approval */}
-              <div className='eventApproval-section shadow-md rounded-2xl w-8/12 px-7 py-5'>
-                <h2 className="text-2xl font-semibold mb-4">Event Approval</h2>
-                <table className="w-full bg-white">
-                  <thead>
-                    <tr>
-                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Name</th>
-                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Date Punched</th>
-                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Punched By</th>
-                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left"></th> 
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {eventsApproval.map((event, index) => (
-                      <tr key={index} className="border-b px-2">
-                        <td className="py-3 text-sm px-6 font-light">{event.name}</td>
-                        <td className="py-3 text-sm px-6 font-light">
-                        {new Date(event.date).toLocaleDateString('en-GB')}
-                        </td>
-                        <td className="py-3 text-sm px-6 font-light">{event.organizer.type}</td>
-                        <td className="py-3 px-6">
-                          <button className="bg-[#F0F9FF] text-[#89868D] text-sm px-3 py-2 rounded-xl border border-[#0095FF]" onClick={() =>handleEventApproval(event._id)}>
-                            Approve
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Quick Tasks */}
-              <div className="w-5/12 shadow-lg rounded-2xl flex flex-col space-y-8 p-4">
+             
+                <div className="w-5/12 shadow-lg rounded-2xl flex flex-col space-y-8 p-4">
                 {/* Urgent Tasks */}
              
                 {/* Quick Tasks */}
@@ -927,6 +891,77 @@ const Page = () => {
                   </div>
                 </div>
               </div>
+
+
+            </div>
+
+            {/* Event Approval and Quick Tasks */}
+            <div className='w-full flex flex-wrap gap-6 px-10 py-7'>
+              {/* Event Approval */}
+              <div className='eventApproval-section shadow-md rounded-2xl w-full px-7 py-5'>
+                <h2 className="text-2xl font-semibold mb-4">Event Approval</h2>
+                <table className="w-full bg-white">
+                  <thead>
+                    <tr>
+                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Name</th>
+                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Date Punched</th>
+                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Punched By</th>
+                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left"></th> 
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {eventsApproval.map((event, index) => (
+                      <tr key={index} className="border-b px-2">
+                        <td className="py-3 text-sm px-6 font-light">{event.name}</td>
+                        <td className="py-3 text-sm px-6 font-light">
+                        {new Date(event.date).toLocaleDateString('en-GB')}
+                        </td>
+                        <td className="py-3 text-sm px-6 font-light">{event.organizer.type}</td>
+                        <td className="py-3 px-6">
+                          <button className="bg-[#F0F9FF] text-[#89868D] text-sm px-3 py-2 rounded-xl border border-[#0095FF]" onClick={() =>handleEventApproval(event._id)}>
+                            Approve
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Quick Tasks */}
+              {/* <div className="w-5/12 shadow-lg rounded-2xl flex flex-col space-y-8 p-4">
+                
+                <div className="bg-white p-4 rounded-lg shadow-sm">
+                  <p className="text-lg font-semibold mb-2">Quick Tasks</p>
+                  <div className="space-y-2">
+                 
+                    <div className="flex items-center space-x-2">
+        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
+        <div>
+          <p>Event Approval</p>
+          <p className="text-sm text-gray-500">15 Notifications</p>
+        </div>
+        
+      </div>
+      <div className="flex items-center space-x-2">
+        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
+        <div>
+          <p>Entity Approval</p>
+          <p className="text-sm text-gray-500">15 Notifications</p>
+        </div>
+        
+      </div>
+      <div className="flex items-center space-x-2">
+        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
+        <div>
+          <p>Finance Approval</p>
+          <p className="text-sm text-gray-500">15 Notifications</p>
+        </div>
+        
+      </div>
+                  </div>
+                </div>
+              </div> */}
             </div>
 
             {/* Charts */}

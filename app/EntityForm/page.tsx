@@ -103,7 +103,7 @@ const page = () => {
 
   return (
     <div className='px-7 py-10 flex justify-center items-center'>
-    <div className='bg-[#E3EDFF] px-8 py-10 w-8/12'>
+    <div className='bg-[#E3EDFF] px-8 py-10 w-9/12'>
 
       <div className='bg-white py-3  space-y-6'>
       <p className='text-2xl px-3'>Entity Proposal Form</p>

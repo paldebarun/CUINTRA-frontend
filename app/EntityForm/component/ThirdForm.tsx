@@ -35,7 +35,7 @@ const ThirdForm: React.FC<ThirdFormProps> = ({ pagination, setPagination, formDa
   };
 
   const renderAdvisorFields = (advisor: string, title: string) => (
-    <div className="flex gap-6 w-full mx-auto justify-between py-16">
+    <div className="flex gap-6 w-full mx-auto items-center justify-between py-16">
       <div className="w-3/12 space-y-3">
         <p>{title} NAME</p>
         <input
@@ -67,7 +67,7 @@ const ThirdForm: React.FC<ThirdFormProps> = ({ pagination, setPagination, formDa
   );
 
   return (
-    <div className="w-full px-3">
+    <div className="w-full px-2">
       <p className="text-lg">FACULTY ADVISOR/ CO - FACULTY ADVISOR DETAILS</p>
 
       {renderAdvisorFields('proposedFacultyAdvisor1', 'FACULTY ADVISOR 1')}

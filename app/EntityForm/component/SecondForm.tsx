@@ -28,7 +28,7 @@ const SecondForm = ({ pagination, setPagination, formData, updateFormData }: any
       <p className='text-lg'>STUDENT SECRETARY/ JOINT SECRETARY DETAILS</p>
 
       {/* Secretary 1 */}
-      <div className='firstsection flex gap-6 w-full mx-auto justify-between py-16'>
+      <div className='firstsection flex gap-6 items-center w-full mx-auto justify-between py-16'>
         <div className='w-4/12 space-y-3'>
           <p>STUDENT SECRETARY 1 NAME</p>
           <input
@@ -62,7 +62,7 @@ const SecondForm = ({ pagination, setPagination, formData, updateFormData }: any
       </div>
 
       {/* Secretary 2 */}
-      <div className='secondsection flex gap-6 w-full mx-auto justify-between py-16'>
+      <div className='secondsection flex gap-6 w-full items-center mx-auto justify-between py-16'>
         <div className='w-4/12 space-y-3'>
           <p>STUDENT SECRETARY 2 NAME</p>
           <input
@@ -96,7 +96,7 @@ const SecondForm = ({ pagination, setPagination, formData, updateFormData }: any
       </div>
 
       {/* Joint Secretary 1 */}
-      <div className='thirdsection flex gap-6 w-full mx-auto justify-between py-16'>
+      <div className='thirdsection flex gap-6 w-full items-center mx-auto justify-between py-16'>
         <div className='w-4/12 space-y-3'>
           <p>STUDENT JOINT SECRETARY 1 NAME</p>
           <input
@@ -130,7 +130,7 @@ const SecondForm = ({ pagination, setPagination, formData, updateFormData }: any
       </div>
 
       {/* Joint Secretary 2 */}
-      <div className='fourthsection flex gap-6 w-full mx-auto justify-between py-16'>
+      <div className='fourthsection flex gap-6 w-full mx-auto items-center justify-between py-16'>
         <div className='w-4/12 space-y-3'>
           <p>STUDENT JOINT SECRETARY 2 NAME</p>
           <input
