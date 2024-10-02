@@ -83,7 +83,7 @@ const sidebarData=[
     {
         icon:home,
         text:"Home",
-        link:"/"
+        link:"/home"
     },
     {
         icon:ManageEntities,
@@ -94,22 +94,22 @@ const sidebarData=[
         icon:EventApproval,
         text:"Event Approval",
         
-        link:"/"
+        link:"/home"
     },
     {
         icon:Notification,
         text:"Notifications",
-        link:"/"
+        link:"/home"
     },
     {
         icon:profile,
         text:"Profile",
-        link:"/"
+        link:"/home"
     },
     {
         icon:setting,
         text:"Setting",
-        link:"/"
+        link:"/home"
     },
     {
         icon:signup,

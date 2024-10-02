@@ -1,9 +1,12 @@
 "use client";
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 interface QuickMenuItem {
     title: string;
-    subtitle?: string;
+    subtitle?: string | number;
     icon?: JSX.Element;
     action?: {
         text: string;
@@ -17,26 +20,26 @@ const QuickMenuItem: React.FC<QuickMenuItem> = ({ title, subtitle, icon, action 
         {subtitle && <div className="text-3xl font-bold mb-1">{subtitle}</div>}
         <h3 className="text-lg font-semibold mb-2">{title}</h3>
         {action && (
-            <a
+            <Link
                 href={action.href}
                 className="mt-2 text-sm underline hover:text-blue-200 transition-colors duration-200"
             >
                 {action.text}
-            </a>
+            </Link>
         )}
     </div>
-)
+);
 
 export default function QuickMenu() {
-    const menuItems: QuickMenuItem[] = [
+    const [menuItems, setMenuItems] = useState<QuickMenuItem[]>([
         {
             title: 'Active University Bodies',
-            subtitle: '500',
+            subtitle: '0',
             action: { text: 'View more', href: '#' },
         },
         {
             title: 'Students enrolled',
-            subtitle: '1000',
+            subtitle: '0',
             action: { text: 'Enroll now', href: '#' },
         },
         {
@@ -63,7 +66,49 @@ export default function QuickMenu() {
                 </svg>
             ),
         },
-    ]
+    ]);
+
+    useEffect(() => {
+        const fetchBodies = async () => {
+            const loadingId=toast.loading("loading...");
+            try {
+                const res = await axios.get('http://localhost:4000/api/allbodies/getallbodies');
+                console.log("this is response of bodies ", res);
+
+                const members=await axios.get('http://localhost:4000/api/member/getAllmembers');
+
+                console.log("this is response of members : ",members);
+
+
+                if (res.data.success && members.data.success) {
+                   
+                    setMenuItems(prevItems =>
+                        prevItems.map((item, index) =>
+                            index === 0 ? { ...item, subtitle: res.data.totalBodiesNumber.toString() } : item
+                        )
+                    );
+                    setMenuItems(prevItems =>
+                        prevItems.map((item, index) =>
+                            index === 1 ? { ...item, subtitle: members.data.response.length.toString() } : item
+                        )
+                    );
+
+                    toast.dismiss(loadingId);
+                    
+                }
+
+                
+            } catch (error) {
+                toast.dismiss(loadingId);
+                toast.error('an error occured while fetching data');
+                console.error("Error fetching bodies:", error);
+            }
+        };
+
+        
+
+        fetchBodies();
+    }, []);
 
     return (
         <div className="h-auto">
@@ -73,5 +118,5 @@ export default function QuickMenu() {
                 ))}
             </div>
         </div>
-    )
+    );
 }

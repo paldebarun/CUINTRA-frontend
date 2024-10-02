@@ -1,10 +1,37 @@
 "use client"
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
+
 
 export default function Header() {
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState('');
+  const router=useRouter();
+  const [isLoggedIn,setLoggedIn]=useState<boolean>(false);
+
+ const LogoutHandler=()=>{
+  localStorage.removeItem('token');
+  router.push('/login');
+ }
+
+  useEffect(() => {
+     const loadingId=toast.loading('please wait ...');
+
+     const token=localStorage.getItem('token');
+
+     if(!token){
+       toast.dismiss(loadingId);
+       router.push('/login');
+
+     }
+     else{
+      toast.dismiss(loadingId);
+      setLoggedIn(true);
+     }
+  }, [])
+  
 
   return (
     <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md">
@@ -42,7 +69,7 @@ export default function Header() {
       </div>
       
       <div className="flex items-center space-x-4">
-        <Link href='/home' className="text-[#363636] hover:text-gray-800">
+        <Link href='/landing' className="text-[#363636] hover:text-gray-800">
           <svg
             className="h-6 w-6"
             fill="none"
@@ -59,9 +86,13 @@ export default function Header() {
           </svg>
         </Link>
 
-        <Link href="/login" className="text-[#363636] border-[#363636] px-4 py-1 rounded-full border transition duration-300">
+       {!isLoggedIn ? <Link href="/login" className="text-[#363636] border-[#363636] px-4 py-1 rounded-full border transition duration-300">
           Log in
         </Link>
+      :<button onClick={LogoutHandler} className="text-[#363636] border-[#363636] px-4 py-1 rounded-full border transition duration-300">
+        Log out
+        </button>  
+      }
       </div>
     </header>
   )

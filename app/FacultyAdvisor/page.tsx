@@ -71,7 +71,7 @@ const sidebarData=[
     {
         icon:home,
         text:"Home",
-        link:"/"
+        link:"/home"
     },
     {
         icon:ManageEntities,

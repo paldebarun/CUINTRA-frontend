@@ -73,7 +73,7 @@ export default function DiscussionForum() {
       `}</style>
             <div className="w-full mx-auto">
                 <div className="grad rounded-t-[50px] text-white text-xl font-bold py-3 px-4 inter-medium text-center">
-                    Discussion forum
+                    Discussion forum (under development)
                 </div>
                 <div className="bg-gray-100 p-4 rounded-b-[50px] relative">
                     <div className="h-[280px] overflow-y-auto space-y-3 pr-2">
