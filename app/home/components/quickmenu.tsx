@@ -35,7 +35,7 @@ export default function QuickMenu() {
         {
             title: 'Active University Bodies',
             subtitle: '0',
-            action: { text: 'View more', href: '#' },
+            action: { text: 'View more', href: '/Entities/Club' },
         },
         {
             title: 'Students enrolled',

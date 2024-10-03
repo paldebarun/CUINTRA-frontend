@@ -1,23 +1,23 @@
-"use client"
+"use client";
 
-import React from 'react'
-import home from '../images/Home.png'
-import ManageEntities from '../images/Chart.png'
-import Image from 'next/image'
+import React from "react";
+import home from "../images/Home.png";
+import ManageEntities from "../images/Chart.png";
+import Image from "next/image";
 // import EventApproval from '../../images/Document.png'
 // import Notification from '../../images/Message.png'
 // import profile from '../../images/Profile.png'
 // import setting from '../../images/Info-Square.png'
-import signup from '../images/Logout.png'
-import search from '../images/XMLID 223.png'
-import bellicon from '../images/Group 1000002785.png'
-import rectanglehollow from '../images/Rectangle 907.png'
-import rectanglefilled from '../images/Rectangle 1393.png'
-import arrowhead from '../images/Group 21861.png'
+import signup from "../images/Logout.png";
+import search from "../images/XMLID 223.png";
+import bellicon from "../images/Group 1000002785.png";
+import rectanglehollow from "../images/Rectangle 907.png";
+import rectanglefilled from "../images/Rectangle 1393.png";
+import arrowhead from "../images/Group 21861.png";
 // import { Calendar } from "@/components/ui/calendar"
 // import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 // import { LineChart, Line, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from "react";
 // import plus from '../../images/Group 1000002786.png'
 // import {
 //   ChartConfig,
@@ -27,27 +27,27 @@ import { useState,useEffect } from 'react'
 //   ChartTooltip,
 //   ChartTooltipContent,
 // } from "@/components/ui/chart"
-import { toast } from 'react-hot-toast';
-import { useRouter } from "next/navigation"
-import axios from 'axios'
-import Link from 'next/link'
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import Link from "next/link";
 // import { ObjectId } from "mongoose";
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 
-
-
+import ApproveMembers from "./ApproveMembers";
+import MemberList from "./MemberList";
 
 // const chartConfig = {
 //   Dept_Societies: {
@@ -68,49 +68,21 @@ import {
 //   },
 // } satisfies ChartConfig;
 
-
-
-
-const sidebarData=[
-    {
-        icon:home,
-        text:"Home",
-        link:"/"
-    },
-    {
-        icon:ManageEntities,
-        text:"Manage Entities",
-        link:`/Entities/Club`
-
-    },
-    {   icon:signup,
-        text:"Signout",
-        link:"/login"
-    }
-    // {
-    //     icon:EventApproval,
-    //     text:"Event Approval"
-    // },
-    // {
-    //     icon:Notification,
-    //     text:"Notifications"
-    // },
-    // {
-    //     icon:profile,
-    //     text:"Profile"
-    // },
-    // {
-    //     icon:setting,
-    //     text:"Setting"
-    // },
-    // {
-    //     icon:signup,
-    //     text:"Signup",
-        
-    // },
-    
-]
-
+const sidebarData = [
+  {
+    icon: home,
+    text: "ApproveMembers",
+  },
+  {
+    icon: ManageEntities,
+    text: "Propose Event",
+  },
+  {
+    icon: ManageEntities,
+    text: "Members List",
+  },
+  { icon: signup, text: "Signout" },
+];
 
 // interface Event {
 //     name: string;
@@ -128,19 +100,18 @@ const sidebarData=[
 //     Eventtype: string;
 //     category: string;
 //     approval?: boolean;
-//     featured?: boolean;  
+//     featured?: boolean;
 //   }
 
 const EntityData = [
   {
-    title: "Total Student Bodies",
+    title: "Total Members ",
     value: "0",
     data: [
-      { label: "Dept. Societies", value: "0" },
-      { label: "Prof. Societies", value: "0" },
-      { label: "Clubs", value: "0" },
-      { label: "Communities", value: "0" }
-    ]
+      { label: "Male", value: "0" },
+      { label: "Female", value: "0" },
+      { label: "Other", value: "0" },
+    ],
   },
   {
     title: "Total Events",
@@ -148,26 +119,25 @@ const EntityData = [
     data: [
       { label: "Flagship Events", value: "0" },
       { label: "Monthly Events", value: "0" },
-      { label: "Weekly Events", value: "0" }
-    ]
+      { label: "Weekly Events", value: "0" },
+    ],
   },
   {
-    title:"Budget Used",
-    value:0,
-    data:[{label:"You have used :",value:"0"}]
-  }
+    title: "Budget Used",
+    value: 0,
+    data: [{ label: "You have used :", value: "0" }],
+  },
 
-//   {
-//     title: "Pending Finance Approvals",
-//     value: "20",
-//     data: [
-//       { label: "Flagship Events", value: "05" },
-//       { label: "Monthly Events", value: "06" },
-//       { label: "Weekly Events", value: "09" }
-//     ]
-//   }
+  //   {
+  //     title: "Pending Finance Approvals",
+  //     value: "20",
+  //     data: [
+  //       { label: "Flagship Events", value: "05" },
+  //       { label: "Monthly Events", value: "06" },
+  //       { label: "Weekly Events", value: "09" }
+  //     ]
+  //   }
 ];
-
 
 // interface ScheduleEvent {
 //   start: string;
@@ -535,13 +505,6 @@ const EntityData = [
 //   ]
 // };
 
-
-
-
-
-
-
-
 // const chartData = [
 
 //   { month: "Jun", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
@@ -553,54 +516,45 @@ const EntityData = [
 //   { month: "Dec", Dept_Societies: 214, Clubs: 140, Prof_Societies: 125, Communities: 82 },
 // ]
 
-
 // const eventApprovalData=[
 
 //     {
 //       name:"lorem ipsum",
 //       datepurchased:"21.8.2024",
 //       purchasedby:"Ms. Ankita",
-      
+
 //     },
 //     {
 //       name:"lorem ipsum",
 //       datepurchased:"21.8.24",
 //       purchasedby:"Mr. SRK",
-        
+
 //       },
 //       {
 //         name:"lorem ipsum",
 //       datepurchased:"21.8.24",
 //       purchasedby:"Ms. Amya",
-        
+
 //       },
 //       {
 //         name:"lorem ipsum",
 //         datepurchased:"21.8.24",
 //         purchasedby:"Mr. Toshit",
-        
+
 //       },
 //       {
 //         name:"lorem ipsum",
 //         datepurchased:"21.8.24",
 //         purchasedby:"Ms. Ankita",
-        
+
 //       }
 // ]
 
-
-
-const NotificationData=[
-  "notification 1",
-  "notification 2",
-  "notification 2",
-]
-
-
-
+const NotificationData = ["notification 1", "notification 2", "notification 2"];
 
 const Page = () => {
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
+  const [currentMenu, setCurrentMenu] = useState<string>("ApproveMembers");
 
   // Function to handle screen size
   const handleResize = () => {
@@ -612,22 +566,19 @@ const Page = () => {
     handleResize();
 
     // Add event listener for window resize
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Clean up the event listener on unmount
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  
-
 
   // const [date, setDate] = useState(new Date());
   // const [schedule, setSchedule] = useState([]);
   // const [isModalOpen, setIsModalOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const [eventsApproval, setEventsApproval] = useState<any[]>([]);
+
   // const [error, setError] = useState('');
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -635,75 +586,84 @@ const Page = () => {
   // const handleModalToggle = () => {
   //   setIsModalOpen(!isModalOpen);
   // };
-  
+
   const signOut = () => {
-    localStorage.removeItem('token');
-    router.push('/login');
+    localStorage.removeItem("token");
+    router.push("/login");
   };
 
   useEffect(() => {
     const checkLogin = () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        router.push('/login');
+        router.push("/login");
         return;
       }
     };
 
     const fetchData = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        router.push('/login');
+        router.push("/login");
         return;
       }
 
       const toastId = toast.loading("Please wait ...");
 
       try {
-        const [userResponse, clubs, deptSocieties, profsocieties, communities] = await Promise.all([
-          axios.get('http://localhost:4000/api/me', { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get('http://localhost:4000/api/clubRoutes/clubs'),
-          axios.get('http://localhost:4000/api/deptSocieties/departmental-societies'),
-          axios.get('http://localhost:4000/api/proffSocieties/professional-societies'),
-          axios.get('http://localhost:4000/api/communitiesRoutes/communities')
-         
-        ]);
-        console.log(userResponse);
-        if(userResponse.data.user.role!="Student Rep"){
-          router.push('/login');
-        }
-         const entityRef = userResponse.data.user.entity;
-         const budget = await axios.get('http://localhost:4000/api/event/getTotalBudgetByEntity',{
-          params:{entityRef:entityRef}
-      });
-// Now pass the entityRef as a query parameter to the next API
-const allEvents = await axios.get('http://localhost:4000/api/event/events-count-entity',{
-  params:{entityRef:entityRef}
-});
-     const membersOfEntity = await axios.get(`http://localhost:4000/api/member/listMembersOfEntity`, {
-  params: { entityRef: entityRef }
-  
-});
+        const userResponse = await axios.get("http://localhost:4000/api/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
+        console.log(userResponse);
+        if (userResponse.data.user.role != "Student Rep") {
+          router.push("/login");
+        }
+        const entityRef = userResponse.data.user.entity;
+        const budget = await axios.get(
+          "http://localhost:4000/api/event/getTotalBudgetByEntity",
+          {
+            params: { entityRef: entityRef },
+          }
+        );
+        // Now pass the entityRef as a query parameter to the next API
+        const allEvents = await axios.get(
+          "http://localhost:4000/api/event/events-count-entity",
+          {
+            params: { entityRef: entityRef },
+          }
+        );
+
+        const MembersCountResponse = await axios.get(
+          "http://localhost:4000/api/member/member-count",
+          {
+            params: { entity: entityRef },
+          }
+        );
+        console.log(MembersCountResponse);
+        const membersObj = MembersCountResponse.data;
+
+        EntityData[0].value =
+          membersObj.female + membersObj.male + membersObj.other;
+        EntityData[0].data[0].value = membersObj.male;
+        EntityData[0].data[1].value = membersObj.female;
+        EntityData[0].data[2].value = membersObj.other;
 
         if (userResponse.data.success) {
           setUser(userResponse.data.user);
-          setEventsApproval(membersOfEntity.data.response);
-          
+
           // Update EntityData with fetched values
-          EntityData[1].value = allEvents.data.data.weekly+ allEvents.data.data.monthly + allEvents.data.data.flagship;
+          EntityData[1].value =
+            allEvents.data.data.weekly +
+            allEvents.data.data.monthly +
+            allEvents.data.data.flagship;
           EntityData[1].data[0].value = allEvents.data.data.flagship;
           EntityData[1].data[1].value = allEvents.data.data.monthly;
           EntityData[1].data[2].value = allEvents.data.data.weekly;
-          EntityData[0].value = clubs.data.Entity.length + deptSocieties.data.Entities.length + communities.data.Entity.length + profsocieties.data.Entity.length;
-          EntityData[0].data[0].value = deptSocieties.data.Entities.length;
-          EntityData[0].data[1].value = profsocieties.data.Entity.length;
-          EntityData[0].data[2].value = clubs.data.Entity.length;
-          EntityData[0].data[3].value = communities.data.Entity.length;
+
           EntityData[2].value = budget.data.totalBudget;
           EntityData[2].data[0].value = `Rs. ${budget.data.totalBudget}`;
           toast.dismiss(toastId);
-         
         } else {
           toast.dismiss(toastId);
           toast.error("User not found");
@@ -723,133 +683,140 @@ const allEvents = await axios.get('http://localhost:4000/api/event/events-count-
 
   if (loading || !user) return <div></div>;
 
-
-  const handleMemberApproval = async (memberId:any) => {
-    try {
-      await axios.post(`http://localhost:4000/api/member/approve`, null, {
-        params: { memberId: memberId },
-      });
-      const entityRef = user.entity;
-      const membersOfEntity = await axios.get('http://localhost:4000/api/member/listMembersOfEntity', {
-        params: { entityRef: entityRef }
-      });
-      setEventsApproval(membersOfEntity.data.response); 
-      toast.success('Member approved successfully!');
-    } catch (error) {
-      toast.error('Failed to approve the event. Please try again.');
-    }
-  };
-
-
   if (!isDesktop) {
     return (
-      <div className='w-full h-screen flex justify-center items-center'>
-        <p className='text-xl font-bold'>Please open this page on a desktop for the best experience.</p>
+      <div className="w-full h-screen flex justify-center items-center">
+        <p className="text-xl font-bold">
+          Please open this page on a desktop for the best experience.
+        </p>
       </div>
     );
   }
 
-
   return (
-    <div className='flex w-screen min-h-screen'>
+    <div className="flex w-screen min-h-screen">
       {/* Sidebar */}
-      <div className='sidebar flex flex-col gap-6 w-1/5 min-h-screen'>
-        <div className='flex flex-col items-start px-10 py-4'>
-          <p className='text-2xl'>Hello!</p>
-          <p className='text-3xl font-semibold'>{user.name}</p>
+      <div className="sidebar flex flex-col gap-6 w-1/5 min-h-screen">
+        <div className="flex flex-col items-start px-10 py-4">
+          <p className="text-2xl">Hello!</p>
+          <p className="text-3xl font-semibold">{user.name}</p>
         </div>
-        <div className='p-3 flex flex-col gap-5'>
-          {sidebarData.map((data, index) => (
+        <div className="p-3 flex flex-col gap-5">
+          {sidebarData.map((data, index) =>
             data.text === "signout" ? (
-              <button 
-                key={index} 
-                onClick={signOut} 
-                className='flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]'
+              <button
+                key={index}
+                onClick={signOut}
+                className="flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]"
               >
                 <Image src={data.icon} alt={data.text} />
                 <p>{data.text}</p>
               </button>
             ) : (
-              <Link href={data.link} key={index} className='flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]'>
+              <div
+                onClick={() => {
+                  setCurrentMenu(data.text);
+                }}
+                key={index}
+                className="flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]"
+              >
                 <Image src={data.icon} alt={data.text} />
                 <p>{data.text}</p>
-              </Link>
+              </div>
             )
-          ))}
+          )}
         </div>
       </div>
 
       {/* Main Content */}
-      <div className='w-full flex flex-col pb-20'>
+      <div className="w-full flex flex-col pb-20">
         {/* Navbar */}
-        <div className='Navbar flex w-full py-3 items-center justify-between px-3'>
+        <div className="Navbar flex w-full py-3 items-center justify-between px-3">
           {/* Search bar */}
-          <div className='flex gap-2 px-5 py-5 bg-[#F9FAFB] rounded-2xl'>
-            <Image src={search} alt="search" className='w-[24px] h-[24px]' />
-            <input placeholder='Search' className='outline-none bg-[#F9FAFB] w-[300px]' />
+          <div className="flex gap-2 px-5 py-5 bg-[#F9FAFB] rounded-2xl">
+            <Image src={search} alt="search" className="w-[24px] h-[24px]" />
+            <input
+              placeholder="Search"
+              className="outline-none bg-[#F9FAFB] w-[300px]"
+            />
           </div>
 
           {/* User profile */}
-          <div className='flex gap-3'>
-          <TooltipProvider>
-  <Tooltip>
-    <TooltipTrigger>
-      <div className='w-[43.22px] h-[40px] relative'>
-              <Image src={rectanglehollow} alt="belliconbg" className='w-full h-full' />
-              
-      
-              <Image src={bellicon} alt="bellicon" className='absolute w-6/12 h-6/12 top-1/4 left-1/4' />
-              
-            </div>
-            
-            </TooltipTrigger>
-    <TooltipContent>
+          <div className="flex gap-3">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <div className="w-[43.22px] h-[40px] relative">
+                    <Image
+                      src={rectanglehollow}
+                      alt="belliconbg"
+                      className="w-full h-full"
+                    />
 
-      <p>(notifications under development)</p>
-      <div>
-        {NotificationData.map((notification,index)=>(
-          <p key={index}>{notification}</p>
-        ))}
-      </div>
-    </TooltipContent>
-  </Tooltip>
-</TooltipProvider>
+                    <Image
+                      src={bellicon}
+                      alt="bellicon"
+                      className="absolute w-6/12 h-6/12 top-1/4 left-1/4"
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>(notifications under development)</p>
+                  <div>
+                    {NotificationData.map((notification, index) => (
+                      <p key={index}>{notification}</p>
+                    ))}
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
 
-            
-            <Image src={rectanglefilled} alt="filledrectangle" className='w-[63.22px] h-[60px]' />
+            <Image
+              src={rectanglefilled}
+              alt="filledrectangle"
+              className="w-[63.22px] h-[60px]"
+            />
             <div>
-                <p className='font-semibold'>{user.name.length > 7 ? `${user.name.slice(0, 7)}...` : user.name}</p>
-                <p className='text-slate-400'>Central Office</p>
-              </div>
-  
-              {user.name.length > 7 && (
+              <p className="font-semibold">
+                {user.name.length > 7
+                  ? `${user.name.slice(0, 7)}...`
+                  : user.name}
+              </p>
+              <p className="text-slate-400">Central Office</p>
+            </div>
 
-<Popover>
-<PopoverTrigger><Image 
-      src={arrowhead} 
-      alt="profile" 
-      className='w-[16.86px] h-[16px] mt-3 hover:cursor-pointer' 
-         /></PopoverTrigger>
-<PopoverContent>{user.name}</PopoverContent>
-</Popover>
-           
-  )}
-     
+            {user.name.length > 7 && (
+              <Popover>
+                <PopoverTrigger>
+                  <Image
+                    src={arrowhead}
+                    alt="profile"
+                    className="w-[16.86px] h-[16px] mt-3 hover:cursor-pointer"
+                  />
+                </PopoverTrigger>
+                <PopoverContent>{user.name}</PopoverContent>
+              </Popover>
+            )}
           </div>
         </div>
 
         {/* Dashboard Content */}
-        <div className='w-full flex px-10 py-7'>
-          <div className='w-11/12 border-r-2'>
+        <div className="w-full flex px-10 py-7">
+          <div className="w-11/12 border-r-2">
             {/* Entity Data */}
             <div className="w-full h-auto flex flex-wrap gap-6 py-7 px-10">
               {EntityData.map((entity, index) => (
-                <div key={index} className="w-[220px] h-auto p-4 rounded-2xl shadow-lg border border-blue-300">
+                <div
+                  key={index}
+                  className="w-[220px] h-auto p-4 rounded-2xl shadow-lg border border-blue-300"
+                >
                   <div className="flex items-center gap-2 mb-4">
                     <span className="icon bg-blue-500 text-white p-2 rounded-full"></span>
                     <p className="font-semibold">{entity.title}</p>
                   </div>
-                  <p className="text-2xl font-bold text-blue-500 mb-2">{entity.value}</p>
+                  <p className="text-2xl font-bold text-blue-500 mb-2">
+                    {entity.value}
+                  </p>
                   <div className="text-sm text-gray-600 space-y-1">
                     {entity.data.map((item, i) => (
                       <div key={i} className="flex justify-between">
@@ -860,139 +827,11 @@ const allEvents = await axios.get('http://localhost:4000/api/event/events-count-
                   </div>
                 </div>
               ))}
-               <div className="bg-blue-100 p-10 rounded-lg shadow-sm">
-                  <p className="text-lg font-semibold mb-2">Urgent Tasks</p>
-                  <div className="space-y-2">
-                    {/* Add urgent tasks here */}
-                    <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Finance Approval</p>
-          <p className="text-sm text-gray-500">TechFest</p>
-        </div>
-      </div>
-      <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Finance Approval</p>
-          <p className="text-sm text-gray-500">TechFest</p>
-        </div>
-      </div>
-      <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Finance Approval</p>
-          <p className="text-sm text-gray-500">TechFest</p>
-        </div>
-      </div>
-                  </div>
-                </div>
-
-                <div className="bg-white p-8 rounded-lg shadow-lg">
-                  <p className="text-lg font-semibold mb-2">Quick Tasks</p>
-                  <div className="space-y-2">
-                    {/* Add quick tasks here */}
-                    <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Event Approval</p>
-          <p className="text-sm text-gray-500">15 Notifications</p>
-        </div>
-        
-      </div>
-      <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Entity Approval</p>
-          <p className="text-sm text-gray-500">15 Notifications</p>
-        </div>
-        
-      </div>
-      <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Finance Approval</p>
-          <p className="text-sm text-gray-500">15 Notifications</p>
-        </div>
-        
-      </div>
-                  </div>
-                </div>
             </div>
 
-            {/* Event Approval and Quick Tasks */}
-            <div className='w-full flex flex-wrap gap-6 px-10 py-7'>
-              {/* Event Approval */}
-              <div className='eventApproval-section shadow-md rounded-2xl w-full px-7 py-5'>
-                <h2 className="text-2xl font-semibold mb-4">Member Approval</h2>
-                <table className="w-full bg-white">
-                  <thead>
-                    <tr>
-                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Name</th>
-                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Email</th>
-                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Member UID</th>
-                      <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left"></th> 
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {eventsApproval.map((member, index) => (
-                      <tr key={index} className="border-b px-2">
-                        <td className="py-3 text-sm px-6 font-light">{member.name}</td>
-                        <td className="py-3 text-sm px-6 font-light">{member.email}</td>
-                        <td className="py-3 text-sm px-6 font-light">{member.uid}</td>
-                        <td className="py-3 px-6">
-                          <button className="bg-[#F0F9FF] text-[#89868D] text-sm px-3 py-2 rounded-xl border border-[#0095FF]" onClick={() => handleMemberApproval(member._id)} >
-                            Approve
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            {currentMenu === "ApproveMembers" && <ApproveMembers user={user} />}
 
-              {/* Quick Tasks */}
-              {/* <div className="w-4/12 shadow-lg rounded-2xl flex flex-col space-y-8 p-4">
-
-               
-
-              
-                <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <p className="text-lg font-semibold mb-2">Quick Tasks</p>
-                  <div className="space-y-2">
-                 
-                    <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Event Approval</p>
-          <p className="text-sm text-gray-500">15 Notifications</p>
-        </div>
-        
-      </div>
-      <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Entity Approval</p>
-          <p className="text-sm text-gray-500">15 Notifications</p>
-        </div>
-        
-      </div>
-      <div className="flex items-center space-x-2">
-        <span className="icon-class bg-blue-500 text-white p-2 rounded-full"></span>
-        <div>
-          <p>Finance Approval</p>
-          <p className="text-sm text-gray-500">15 Notifications</p>
-        </div>
-        
-      </div>
-                  </div>
-                </div>
-              </div> */}
-            </div>
-
-            {/* Charts */}
-            
-            {/* Add schedule display logic here */}
+            {currentMenu === "Members List" && <MemberList user={user} />}
           </div>
         </div>
       </div>

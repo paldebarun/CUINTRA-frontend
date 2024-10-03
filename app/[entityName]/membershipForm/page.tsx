@@ -15,6 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
  
 
@@ -24,6 +26,12 @@ const dropDownData=[
   "Communities",
   "ProfessionalSocieties",
   "DepartmentalSocieties"
+]
+
+const departmentData=[
+  "physiotherapy",
+  "DAA",
+ 
 ]
 
 const Page = ({ params }: { params: { entityName: string } }) => {
@@ -59,9 +67,9 @@ const Page = ({ params }: { params: { entityName: string } }) => {
   const [uid, setUid] = useState('');
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
-  const [entityType, setEntityType] = useState('');
-
-
+  const [entityType, setEntityType] = useState<string>('');
+  const [gender,setgender]=useState<string>("");
+  const [department,setDepartment]=useState<string>("");
 
   useEffect(() => {
     setEntityName(decodeURIComponent(params.entityName));
@@ -112,9 +120,10 @@ const Page = ({ params }: { params: { entityName: string } }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const toastId=toast.loading('submitting the membership form');
+    console.log(email)
 
     // Validate form fields
-    if (!name || !uid || !email || !otp || !entityType) {
+    if (!name || !uid || !email || !otp || !entityType || !gender || !department) {
       toast.dismiss(toastId);
       toast.error('required all fields');
    
@@ -127,10 +136,12 @@ const Page = ({ params }: { params: { entityName: string } }) => {
       otp,
       entityType,
       entityId: entityName,
+      gender,
+      department
     }
 
 
-   
+   console.log("this is object  of membership : ",object);
  
 
     try {
@@ -200,6 +211,24 @@ const Page = ({ params }: { params: { entityName: string } }) => {
                   onChange={(e) => setUid(e.target.value)}
                 />
               </div>
+              <div className='space-y-5 py-6'>
+  <p className='block text-gray-700 text-sm font-bold mb-2'>Gender</p>
+
+  <RadioGroup value={gender} onValueChange={setgender}>
+    <div className="flex items-center space-x-2">
+      <RadioGroupItem value="male" id="male" />
+      <Label htmlFor="male">Male</Label>
+    </div>
+    <div className="flex items-center space-x-2">
+      <RadioGroupItem value="female" id="female" />
+      <Label htmlFor="female">Female</Label>
+    </div>
+    <div className="flex items-center space-x-2">
+      <RadioGroupItem value="other" id="other" />
+      <Label htmlFor="other">Other</Label>
+    </div>
+  </RadioGroup>
+</div>
               {/* <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="entityType">
                   Entity Type
@@ -214,7 +243,7 @@ const Page = ({ params }: { params: { entityName: string } }) => {
                 />
               </div> */}
 
-     <div className='w-full py-6 px-2'>
+     <div className='w-full py-4 px-2'>
       <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline"> Entity Type</Button>
@@ -234,9 +263,30 @@ const Page = ({ params }: { params: { entityName: string } }) => {
       </DropdownMenuContent>
     </DropdownMenu>
     </div>
+
+    <div className='w-full py-4 px-2'>
+      <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline"> Department</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-64">
+        <DropdownMenuLabel>Select</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuRadioGroup value={department} onValueChange={setDepartment}>
+          {
+           departmentData.map((entity,index)=>(
+            <DropdownMenuRadioItem key={index} value={entity}>{entity}</DropdownMenuRadioItem>
+           ))
+          }
+          
+          
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+    </div>
               
 
-              <div className="mb-4 ">
+              <div className="mb-4 py-3">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                   University Email
                 </label>

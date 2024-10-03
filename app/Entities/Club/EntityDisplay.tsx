@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Button } from '@/components/ui/button'
 
 interface Entity {
     ProposedEntityName: string;
@@ -185,6 +186,7 @@ const EntityDisplay = () => {
                                 <th className="border-b-2 text-white font-normal py-6">Department</th>
                                 <th className="border-b-2 text-white font-normal py-6">Institute</th>
                                 <th className="border-b-2 text-white font-normal py-6">Cluster</th>
+                                <th className="border-b-2 text-white font-normal py-6">Join</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -196,6 +198,13 @@ const EntityDisplay = () => {
                                     <td className="py-2 px-4 font-normal text-sm">{item.EntityDepartment.name}</td>
                                     <td className="py-2 px-4 font-normal text-sm">{item.EntityInstitute.name}</td>
                                     <td className="py-2 px-4 font-normal text-sm">{item.EntityCluster.name}</td>
+
+                                    <Link href={`../${item.ProposedEntityName}/membershipForm`} >
+                                       <Button variant="outline">
+                                        Join
+                                       </Button>
+
+                                    </Link>
                                 </tr>
                             ))}
                         </tbody>
