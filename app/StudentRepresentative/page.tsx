@@ -71,6 +71,10 @@ import MemberList from "./MemberList";
 const sidebarData = [
   {
     icon: home,
+    text: "Approved Events",
+  },
+  {
+    icon: home,
     text: "ApproveMembers",
   },
   {
@@ -640,7 +644,7 @@ const Page = () => {
             params: { entity: entityRef },
           }
         );
-        console.log(MembersCountResponse);
+        console.log("this is member-count-response : ",MembersCountResponse);
         const membersObj = MembersCountResponse.data;
 
         EntityData[0].value =
