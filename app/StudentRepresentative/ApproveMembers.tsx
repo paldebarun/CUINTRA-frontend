@@ -39,8 +39,8 @@ const ApproveMembers = (user:any) => {
           console.log("this is member : ",membersOfEntity);
 
           if(membersOfEntity){
-
-            setEventsApproval(membersOfEntity.data.response);
+            const sortedMembers = membersOfEntity.data.response.sort((a: any, b: any) => a.approval === b.approval ? 0 : a.approval ? 1 : -1);
+            setEventsApproval(sortedMembers);
 
           }
 
@@ -60,17 +60,28 @@ const ApproveMembers = (user:any) => {
   }, []);
 
 
+
   const handleMemberApproval = async (memberId:any) => {
    const toastId= toast.loading('approving member ...')
     try {
       await axios.post(`http://localhost:4000/api/member/approve`, null, {
         params: { memberId: memberId },
       });
-
       
-      
-      
-      setEventsApproval(prevState => prevState.filter(member => member._id !== memberId));
+      setEventsApproval(prevState => {
+        
+        const updatedMembers = prevState.map(member => {
+          if (member._id === memberId) {
+            return { ...member, approval: true }; 
+          }
+          return member;
+        });
+  
+       
+        const sortedMembers = updatedMembers.sort((a: any, b: any) => a.approval === b.approval ? 0 : a.approval ? 1 : -1);
+  
+        return sortedMembers;
+      });
       toast.success('Member approved successfully!');
     } catch (error) {
       toast.error('Failed to approve the event. Please try again.');
@@ -103,7 +114,7 @@ const ApproveMembers = (user:any) => {
   
 
   return (
-    <div className='eventApproval-section shadow-md rounded-2xl w-full px-7 py-5'>
+    <div className='eventApproval-section shadow-md rounded-2xl w-full h-[400px] m-2 px-7 py-5'>
     <h2 className="text-2xl font-semibold mb-4">Member Approval</h2>
     <table className="w-full bg-white">
       <thead>
@@ -122,14 +133,19 @@ const ApproveMembers = (user:any) => {
             <td className="py-3 text-sm px-6 font-light">{member.email}</td>
             <td className="py-3 text-sm px-6 font-light">{member.uid}</td>
             <td className="py-3 px-6">
-              <button className="bg-[#F0F9FF] text-[#89868D] text-sm px-3 py-2 rounded-xl border border-[#0095FF]" onClick={() => handleMemberApproval(member._id)} >
+             {member.approval===false ? <button className="bg-[#F0F9FF] text-[#89868D] text-sm px-3 py-2 rounded-xl border border-[#0095FF]" onClick={() => handleMemberApproval(member._id)} >
                 Approve
-              </button>
+              </button>:
+               <div className="bg-[#F0F9FF] text-center text-[#89868D] text-sm px-3 py-2 rounded-xl border border-[#0095FF]">
+                  Approved
+               </div>
+              
+            }
             </td>
             <td className="py-3 px-6">
-              <button className="bg-[#F0F9FF] text-[#89868D] text-sm px-3 py-2 rounded-xl border border-[#0095FF]" onClick={() => handleMemberRejection(member._id)} >
+             {member.approval===false && <button className="bg-[#F0F9FF] text-[#89868D] text-sm px-3 py-2 rounded-xl border border-[#0095FF]" onClick={() => handleMemberRejection(member._id)} >
                 Reject
-              </button>
+              </button>}
             </td>
           </tr>
         ))}

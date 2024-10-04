@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Input } from "@/components/ui/input"
 
+
+
 const ApproveMembers = (user: any) => {
   const [eventsApproval, setEventsApproval] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -38,7 +40,7 @@ const ApproveMembers = (user: any) => {
   );
 
   return (
-    <div className='eventApproval-section shadow-md rounded-2xl w-full px-7 py-5'>
+    <div className='eventApproval-section shadow-md m-2 rounded-2xl w-full h-[400px]  px-7 py-5'>
       <div className='w-full flex justify-between py-2 px-1'>
         <h2 className="text-2xl font-semibold mb-4">Members List</h2>
         <Input
@@ -55,6 +57,7 @@ const ApproveMembers = (user: any) => {
             <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Name</th>
             <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Email</th>
             <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Member UID</th>
+            <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Gender</th>
           </tr>
         </thead>
         <tbody>
@@ -63,6 +66,7 @@ const ApproveMembers = (user: any) => {
               <td className="py-3 text-sm px-6 font-light">{member.name}</td>
               <td className="py-3 text-sm px-6 font-light">{member.email}</td>
               <td className="py-3 text-sm px-6 font-light">{member.uid}</td>
+              <td className="py-3 text-sm px-6 font-light">{member.gender}</td>
             </tr>
           ))}
         </tbody>

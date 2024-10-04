@@ -713,6 +713,7 @@ const Page = () => {
                 <p>{data.text}</p>
               </button>
             ) : (
+              data.text!=="Propose Event" ?  
               <div
                 onClick={() => {
                   setCurrentMenu(data.text);
@@ -723,6 +724,14 @@ const Page = () => {
                 <Image src={data.icon} alt={data.text} />
                 <p>{data.text}</p>
               </div>
+
+              :
+              <Link href="/EventForm" className="flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]">
+                 
+                 <Image src={data.icon} alt={data.text} />
+                <p>{data.text}</p>
+
+              </Link>
             )
           )}
         </div>
@@ -733,12 +742,13 @@ const Page = () => {
         {/* Navbar */}
         <div className="Navbar flex w-full py-3 items-center justify-between px-3">
           {/* Search bar */}
-          <div className="flex gap-2 px-5 py-5 bg-[#F9FAFB] rounded-2xl">
-            <Image src={search} alt="search" className="w-[24px] h-[24px]" />
-            <input
-              placeholder="Search"
-              className="outline-none bg-[#F9FAFB] w-[300px]"
-            />
+          <div className="flex gap-2 px-5 py-5 bg-white w-[300px] rounded-2xl">
+            
+            <div
+              className="outline-none bg-white w-[300px]"
+            >
+
+            </div>
           </div>
 
           {/* User profile */}
