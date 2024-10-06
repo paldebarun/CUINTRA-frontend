@@ -103,19 +103,25 @@ const Page: React.FC = () => {
       setFormData((prev) => ({ ...prev, imageFile: files[0] }));
     }
   };
+
+  
   const submitHandler = async () => {
     try {
       const toastId = toast.loading("Submitting form");
       const formDataToSend = new FormData();
       for (const key in formData) {
-        if (key === 'imageFile') {
-          if (formData.imageFile) {
-            formDataToSend.append('imageFile', formData.imageFile);
+        if (formData.hasOwnProperty(key)) {
+          const typedKey = key as keyof FormData;
+      
+          if (typedKey === 'imageFile') {
+            if (formData.imageFile) {
+              formDataToSend.append('imageFile', formData.imageFile);
+            }
+          } else if (typedKey === 'startDate' || typedKey === 'endDate') {
+            formDataToSend.append(typedKey, formData[typedKey].toISOString());
+          } else {
+            formDataToSend.append(typedKey, String(formData[typedKey]));  
           }
-        } else if (key === 'startDate' || key === 'endDate') {
-          formDataToSend.append(key, formData[key].toISOString());
-        } else {
-          formDataToSend.append(key, formData[key]);
         }
       }
 
@@ -181,53 +187,55 @@ const Page: React.FC = () => {
             <div className='space-y-2 '>
               <p className='text-sm text-slate-400'>Start date</p>
               <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-[240px] justify-start text-left font-normal",
-                      !formData.startDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {formData.startDate ? format(formData.startDate, "PPP") : <span></span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={formData.startDate}
-                    onSelect={(date) => handleInputChange('startDate', date)}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+  <PopoverTrigger asChild>
+    <Button
+      variant={"outline"}
+      className={cn(
+        "w-[240px] justify-start text-left font-normal",
+        !formData.startDate && "text-muted-foreground"
+      )}
+    >
+      <CalendarIcon className="mr-2 h-4 w-4" />
+      {formData.startDate ? format(formData.startDate, "PPP") : <span>Pick a date</span>}
+    </Button>
+  </PopoverTrigger>
+  <PopoverContent className="w-auto p-0" align="start">
+    <Calendar
+      mode="single"
+      selected={formData.startDate}
+      onSelect={(date) => handleInputChange('startDate', date ?? null)} 
+      initialFocus
+    />
+  </PopoverContent>
+</Popover>
+
             </div>
 
             <div className='space-y-2 '>
               <p className='text-sm text-slate-400'>End date</p>
               <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-[240px] justify-start text-left font-normal",
-                      !formData.endDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {formData.endDate ? format(formData.endDate, "PPP") : <span></span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={formData.endDate}
-                    onSelect={(date) => handleInputChange('endDate', date)}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+  <PopoverTrigger asChild>
+    <Button
+      variant={"outline"}
+      className={cn(
+        "w-[240px] justify-start text-left font-normal",
+        !formData.endDate && "text-muted-foreground"
+      )}
+    >
+      <CalendarIcon className="mr-2 h-4 w-4" />
+      {formData.endDate ? format(formData.endDate, "PPP") : <span>Pick an end date</span>}
+    </Button>
+  </PopoverTrigger>
+  <PopoverContent className="w-auto p-0" align="start">
+    <Calendar
+      mode="single"
+      selected={formData.endDate}
+      onSelect={(date) => handleInputChange('endDate', date ?? null)}
+      initialFocus
+    />
+  </PopoverContent>
+</Popover>
+
             
               <div className="flex items-center space-x-2">
                 <Checkbox 
