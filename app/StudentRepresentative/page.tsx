@@ -872,7 +872,7 @@ const Page = () => {
               ))}
             </div>
 
-            {currentMenu === "ApproveMembers" && <ApproveMembers user={user} />}
+            {currentMenu === "Approve Members" && <ApproveMembers user={user} />}
 
             {currentMenu === "Members List" && <MemberList user={user} />}
 
