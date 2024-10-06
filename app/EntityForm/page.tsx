@@ -17,7 +17,7 @@ const page = () => {
   const [pagination, setPagination] = useState(1)
   const [formData, setFormData] = useState({
     entityType:"",
-  
+    
   })
   const router = useRouter();
 

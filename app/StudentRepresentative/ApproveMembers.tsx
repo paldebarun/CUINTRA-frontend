@@ -114,9 +114,9 @@ const ApproveMembers = (user:any) => {
   
 
   return (
-    <div className='eventApproval-section shadow-md rounded-2xl w-full h-[400px] m-2 px-7 py-5'>
+    <div className='eventApproval-section shadow-md rounded-2xl w-full overflow-x-auto h-[400px] m-2 px-7 py-5'>
     <h2 className="text-2xl font-semibold mb-4">Member Approval</h2>
-    <table className="w-full bg-white">
+    <table className="w-full  bg-white">
       <thead>
         <tr>
           <th className="py-3 text-sm font-thin text-slate-600 px-6 text-left">Name</th>
@@ -133,7 +133,7 @@ const ApproveMembers = (user:any) => {
             <td className="py-3 text-sm px-6 font-light">{member.email}</td>
             <td className="py-3 text-sm px-6 font-light">{member.uid}</td>
             <td className="py-3 px-6">
-             {member.approval===false ? <button className="bg-[#F0F9FF] text-[#89868D] text-sm px-3 py-2 rounded-xl border border-[#0095FF]" onClick={() => handleMemberApproval(member._id)} >
+             {member.approval===false ? <button className="bg-[#c7f4d6] text-slate-500 text-sm px-3 py-2 rounded-xl border border-[#039b2c]" onClick={() => handleMemberApproval(member._id)} >
                 Approve
               </button>:
                <div className="bg-[#F0F9FF] text-center text-[#89868D] text-sm px-3 py-2 rounded-xl border border-[#0095FF]">
@@ -143,7 +143,7 @@ const ApproveMembers = (user:any) => {
             }
             </td>
             <td className="py-3 px-6">
-             {member.approval===false && <button className="bg-[#F0F9FF] text-[#89868D] text-sm px-3 py-2 rounded-xl border border-[#0095FF]" onClick={() => handleMemberRejection(member._id)} >
+             {member.approval===false && <button className="bg-[#f29d8e] text-slate-600 text-sm px-3 py-2 rounded-xl border border-[#ff0000]" onClick={() => handleMemberRejection(member._id)} >
                 Reject
               </button>}
             </td>

@@ -9,7 +9,17 @@ import Image from "next/image";
 // import profile from '../../images/Profile.png'
 // import setting from '../../images/Info-Square.png'
 import signup from "../images/Logout.png";
-import search from "../images/XMLID 223.png";
+import { Calendar } from "@/components/ui/calendar"
+import plus from '../images/Group 1000002786.png'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import bellicon from "../images/Group 1000002785.png";
 import rectanglehollow from "../images/Rectangle 907.png";
 import rectanglefilled from "../images/Rectangle 1393.png";
@@ -48,6 +58,11 @@ import {
 
 import ApproveMembers from "./ApproveMembers";
 import MemberList from "./MemberList";
+import ApproveEvents from "./ApprovedEvents";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import OngoingEvents from "./OngoingEvents";
 
 // const chartConfig = {
 //   Dept_Societies: {
@@ -75,7 +90,7 @@ const sidebarData = [
   },
   {
     icon: home,
-    text: "ApproveMembers",
+    text: "Approve Members",
   },
   {
     icon: ManageEntities,
@@ -554,11 +569,21 @@ const EntityData = [
 //       }
 // ]
 
+interface ScheduleEvent {
+  start: string;
+  end: string;
+  subject: string;
+  location?: string;
+  organizer?: string;
+}
+
 const NotificationData = ["notification 1", "notification 2", "notification 2"];
 
 const Page = () => {
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [schedule, setSchedule] = useState<ScheduleEvent[]>([]);
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
-  const [currentMenu, setCurrentMenu] = useState<string>("ApproveMembers");
+  const [currentMenu, setCurrentMenu] = useState<string>("Approve Members");
 
   // Function to handle screen size
   const handleResize = () => {
@@ -593,6 +618,7 @@ const Page = () => {
 
   const signOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("entity");
     router.push("/login");
   };
 
@@ -637,6 +663,9 @@ const Page = () => {
             params: { entityRef: entityRef },
           }
         );
+        
+        
+
 
         const MembersCountResponse = await axios.get(
           "http://localhost:4000/api/member/member-count",
@@ -698,7 +727,7 @@ const Page = () => {
   }
 
   return (
-    <div className="flex w-screen min-h-screen">
+    <div className="flex w-screen  min-h-screen">
       {/* Sidebar */}
       <div className="sidebar flex flex-col gap-6 w-1/5 min-h-screen">
         <div className="flex flex-col items-start px-10 py-4">
@@ -707,14 +736,14 @@ const Page = () => {
         </div>
         <div className="p-3 flex flex-col gap-5">
           {sidebarData.map((data, index) =>
-            data.text === "signout" ? (
+            data.text === "Signout" ? (
               <button
                 key={index}
                 onClick={signOut}
                 className="flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]"
               >
                 <Image src={data.icon} alt={data.text} />
-                <p>{data.text}</p>
+                <p className="text-sm xl:text-md">{data.text}</p>
               </button>
             ) : (
               data.text!=="Propose Event" ?  
@@ -723,17 +752,17 @@ const Page = () => {
                   setCurrentMenu(data.text);
                 }}
                 key={index}
-                className="flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]"
+                className={data.text===currentMenu ? "flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl bg-[#C3DBFF]":"flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]"}
               >
                 <Image src={data.icon} alt={data.text} />
-                <p>{data.text}</p>
+                <p className="text-sm xl:text-md">{data.text}</p>
               </div>
 
               :
               <Link href="/EventForm" className="flex items-center gap-3 hover:cursor-pointer py-4 px-6 rounded-2xl hover:bg-[#C3DBFF]">
                  
                  <Image src={data.icon} alt={data.text} />
-                <p>{data.text}</p>
+                <p className="text-sm xl:text-md">{data.text}</p>
 
               </Link>
             )
@@ -742,7 +771,7 @@ const Page = () => {
       </div>
 
       {/* Main Content */}
-      <div className="w-full flex flex-col pb-20">
+      <div className="w-full flex  flex-col pb-20">
         {/* Navbar */}
         <div className="Navbar flex w-full py-3 items-center justify-between px-3">
           {/* Search bar */}
@@ -815,7 +844,7 @@ const Page = () => {
         </div>
 
         {/* Dashboard Content */}
-        <div className="w-full flex px-10 py-7">
+        <div className="w-full flex gap-3 px-10 py-7">
           <div className="w-11/12 border-r-2">
             {/* Entity Data */}
             <div className="w-full h-auto flex flex-wrap gap-6 py-7 px-10">
@@ -846,6 +875,90 @@ const Page = () => {
             {currentMenu === "ApproveMembers" && <ApproveMembers user={user} />}
 
             {currentMenu === "Members List" && <MemberList user={user} />}
+
+            {currentMenu === "Approved Events" && <ApproveEvents user={user} />}
+
+           
+           <div className="w-full py-10 space-y-8 ">
+            <p className="text-2xl font-semibold text-center">Ongoing events</p>
+           <OngoingEvents/>
+
+           </div>
+
+  
+          </div>
+
+          <div className='calender_section flex flex-col justify-start items-center px-3 bg-slate-100 rounded-lg'>
+          
+          
+          <Calendar
+      mode="single"
+      selected={date}
+      onSelect={setDate}
+      className="rounded-md "
+    />
+    <div className='w-full py-3 rounded-lg bg-white '>
+    <div className=' w-full flex justify-between px-3'>
+    <p>{date?.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</p>
+
+    <Dialog>
+      <DialogTrigger asChild>
+      <div className='bg-[#0095FF] w-[35px] h-[36px] rounded-lg flex items-center justify-center hover:cursor-pointer'>
+        <Image src={plus} alt="add-schedule"/>
+      </div>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add a task</DialogTitle>
+          <DialogDescription>
+            Add task in your schedule (under development)
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4 ">
+          <div className="grid grid-cols-4 items-center gap-4 py-2 px-1">
+            <Label htmlFor="name" className="text-right">
+              Task 
+            </Label>
+            <Input id="name" value="" placeholder='meeting' className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4 py-2 px-1">
+            <Label htmlFor="username" className="text-right">
+              Time
+            </Label>
+            <Input id="username" value="" placeholder='9:00 pm' className="col-span-3" />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button type="submit">Add</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+     
+
+    </div>
+<div className='schedule-section w-full mt-6 flex flex-col justify-start gap-6 px-2'>
+  {schedule.length > 0 ? (
+    schedule.map((data, index) => (
+      <div key={index} className='flex gap-2 border-b-2 py-3'>
+        <p className='text-slate-500 text-wrap'>
+          {data.start}
+        </p>
+
+        <div className='bg-[#C3DBFF] w-9/12 p-3 space-y-4 rounded-2xl'>
+          <p className='text-sm'>{data.subject}</p>
+          <p className='text-sm text-slate-500'>{data.start} - {data.end}</p>
+        </div>
+      </div>
+    ))
+  ) : (
+    <div className='w-full flex justify-center'>
+       <p className="text-slate-500 py-3 ">No schedule available </p>
+    </div>
+   
+  )}
+</div>
+
+        </div>  
           </div>
         </div>
       </div>
