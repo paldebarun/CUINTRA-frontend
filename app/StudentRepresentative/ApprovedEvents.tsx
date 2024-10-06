@@ -116,7 +116,7 @@ const ApproveEvents = (user: Data) => {
         entityRef: entityRef,
         eventRef: eventRef
       });
-
+      console.log(response);
       toast.dismiss(toastId);
       toast.success('Invitation sent to all members');
     } catch (error) {
