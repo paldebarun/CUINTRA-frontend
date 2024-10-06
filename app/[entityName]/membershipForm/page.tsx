@@ -159,7 +159,7 @@ const Page = ({ params }: { params: { entityName: string } }) => {
 
      toast.dismiss(toastId);
      toast.success("form successfully submitted");
-     router.push('/Entities/Club');
+     window.location.href = 'https://pvc-website1.vercel.app/club';
 
     } catch (error) {
       toast.dismiss(toastId);
