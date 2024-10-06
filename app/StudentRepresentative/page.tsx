@@ -583,7 +583,7 @@ const Page = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [schedule, setSchedule] = useState<ScheduleEvent[]>([]);
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
-  const [currentMenu, setCurrentMenu] = useState<string>("Approve Members");
+  const [currentMenu, setCurrentMenu] = useState<string>("Approved Events");
 
   // Function to handle screen size
   const handleResize = () => {
