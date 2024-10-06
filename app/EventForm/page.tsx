@@ -49,15 +49,23 @@ interface FormData {
 
 const Page: React.FC = () => {
   const router = useRouter();
+  const [entity, setEntity] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Safely access localStorage
+      const savedEntity = localStorage.getItem('entity');
+      if (!savedEntity) {
+        router.push('/login');
+      } else {
+        setEntity(savedEntity);
+      }
+    }
+  }, [router]);
   
 
-  const entity = localStorage.getItem('entity');
+
   
-
-
-  if(!entity){
-    router.push('/login');
-  }
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
   const [formData, setFormData] = useState<FormData>({
     eventName: '',
