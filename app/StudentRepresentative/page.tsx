@@ -589,8 +589,7 @@ const NotificationData = ["notification 1", "notification 2", "notification 2"];
 
 const Page = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
-  // @ts-ignore
-  const [schedule, setSchedule] = useState<ScheduleEvent[]>([]);
+  const schedule:ScheduleEvent[] = [];
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
   const [currentMenu, setCurrentMenu] = useState<string>("Approved Events");
 

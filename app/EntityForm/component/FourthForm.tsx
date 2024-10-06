@@ -25,7 +25,7 @@ interface FourthFormProps {
 
 const FourthForm: React.FC<FourthFormProps> = ({ pagination, setPagination, formData, updateFormData, handleSubmit }) => {
   
-  const [localFormData, setLocalFormData] = useState<FormData>(formData);
+const localFormData=formData
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

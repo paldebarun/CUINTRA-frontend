@@ -5,8 +5,40 @@ import arrow from '../../images/Group 3430.png';
 interface ThirdFormProps {
   pagination: number;
   setPagination: (value: number) => void;
-  formData: any; // Replace 'any' with a more specific type if needed
-  updateFormData: (data: any) => void; // Replace 'any' with a more specific type if needed
+  formData: FormData;
+  updateFormData: (data: Partial<FormData>) => void;
+}
+
+interface FacultyAdvisor {
+  ProposedFacultyAdvisorName: string;
+  ProposedFacultyAdvisorEid: string;
+  MobileNumber: string;
+}
+
+interface StudentRepresentative {
+  proposedStudentRepresentativeName: string;
+  proposedStudentRepresentativeUid: string;
+  MobileNumber: string;
+}
+
+interface FormData {
+  EntityCluster: string;
+  EntityInstitute: string;
+  ProposedBy: string;
+  ProposedDate: string;
+  ProposedEntityName: string;
+  entityCategory: string;
+  entityType: string;
+  proponentDepartment: string;
+  proponentName: string;
+  proposedFacultyAdvisor1: FacultyAdvisor;
+  proposedFacultyAdvisor2: FacultyAdvisor;
+  proposedFacultyCoAdvisor1: FacultyAdvisor;
+  proposedFacultyCoAdvisor2: FacultyAdvisor;
+  proposedStudentJointRepresentative1: StudentRepresentative;
+  proposedStudentJointRepresentative2: StudentRepresentative;
+  proposedStudentRepresentative1: StudentRepresentative;
+  proposedStudentRepresentative2: StudentRepresentative;
 }
 
 interface AdvisorFields {
@@ -15,8 +47,11 @@ interface AdvisorFields {
   MobileNumber?: string;
 }
 
+// Define a union type for advisor keys
+type AdvisorKeys = 'proposedFacultyAdvisor1' | 'proposedFacultyAdvisor2' | 'proposedFacultyCoAdvisor1' | 'proposedFacultyCoAdvisor2';
+
 const ThirdForm: React.FC<ThirdFormProps> = ({ pagination, setPagination, formData, updateFormData }) => {
-  const [localFormData, setLocalFormData] = useState<any>(formData || {});
+  const [localFormData, setLocalFormData] = useState<FormData>(formData || {});
 
   useEffect(() => {
     if (JSON.stringify(localFormData) !== JSON.stringify(formData)) {
@@ -24,8 +59,8 @@ const ThirdForm: React.FC<ThirdFormProps> = ({ pagination, setPagination, formDa
     }
   }, [localFormData, formData, updateFormData]);
 
-  const handleInputChange = (advisor: string, field: string, value: string) => {
-    setLocalFormData((prevData: { [key: string]: AdvisorFields }) => ({
+  const handleInputChange = (advisor: AdvisorKeys, field: keyof AdvisorFields, value: string) => {
+    setLocalFormData((prevData: FormData) => ({
       ...prevData,
       [advisor]: {
         ...prevData[advisor],
@@ -34,7 +69,7 @@ const ThirdForm: React.FC<ThirdFormProps> = ({ pagination, setPagination, formDa
     }));
   };
 
-  const renderAdvisorFields = (advisor: string, title: string) => (
+  const renderAdvisorFields = (advisor: AdvisorKeys, title: string) => (
     <div className="flex gap-6 w-full mx-auto items-center justify-between py-16">
       <div className="w-3/12 space-y-3">
         <p>{title} NAME</p>

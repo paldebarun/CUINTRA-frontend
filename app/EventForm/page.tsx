@@ -124,7 +124,7 @@ const Page: React.FC = () => {
         body: formDataToSend
       });
 
-      const result = await response.json();
+      // const result = await response.json();
 
       if (response.ok) {
         toast.dismiss(toastId);

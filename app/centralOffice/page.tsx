@@ -581,8 +581,8 @@ const Page = () => {
 
   const [date, setDate] = useState<Date | undefined>(new Date());
 
-  // @ts-ignore
-  const [schedule, setSchedule] = useState<ScheduleEvent[]>([]);
+
+  const schedule:ScheduleEvent[] = [];
   // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
   const [counts, setCounts] = useState<Societies | null>(null); 

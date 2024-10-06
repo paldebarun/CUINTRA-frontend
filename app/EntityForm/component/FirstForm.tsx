@@ -34,7 +34,7 @@ const FirstForm : React.FC<FirstFormProps>= ({ pagination, setPagination, formDa
 
 
   const handleSelectChange = (name: keyof FirstFormProps['formData'], value: string) => {
-    setLocalFormData((prevData: any) => ({ ...prevData, [name]: value }));
+    setLocalFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   
