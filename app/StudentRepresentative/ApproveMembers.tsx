@@ -56,7 +56,7 @@ const ApproveMembers = (user:Data) => {
         
           const entityRef = user.user.entity;
           console.log("this is entity ref : ",entityRef);
-          const membersOfEntity = await axios.get(`http://localhost:4000/api/member/listMembersOfEntity`, {
+          const membersOfEntity = await axios.get(`https://intracu-backend-mdl9.onrender.com/api/member/listMembersOfEntity`, {
             params: { entityRef: entityRef }
             
           });
@@ -89,7 +89,7 @@ const ApproveMembers = (user:Data) => {
   const handleMemberApproval = async (memberId:string) => {
    const toastId= toast.loading('approving member ...')
     try {
-      await axios.post(`http://localhost:4000/api/member/approve`, null, {
+      await axios.post(`https://intracu-backend-mdl9.onrender.com/api/member/approve`, null, {
         params: { memberId: memberId },
       });
       
@@ -122,7 +122,7 @@ const ApproveMembers = (user:Data) => {
 
     const toastId= toast.loading('rejecting member ...')
     try {
-      await axios.post(`http://localhost:4000/api/member/reject`, null, {
+      await axios.post(`https://intracu-backend-mdl9.onrender.com/api/member/reject`, null, {
         params: { memberId: memberId },
       });
 

@@ -649,7 +649,7 @@ const Page = () => {
       const toastId = toast.loading("Please wait ...");
 
       try {
-        const userResponse = await axios.get("http://localhost:4000/api/me", {
+        const userResponse = await axios.get("https://intracu-backend-mdl9.onrender.com/api/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -659,14 +659,14 @@ const Page = () => {
         }
         const entityRef = userResponse.data.user.entity;
         const budget = await axios.get(
-          "http://localhost:4000/api/event/getTotalBudgetByEntity",
+          "https://intracu-backend-mdl9.onrender.com/api/event/getTotalBudgetByEntity",
           {
             params: { entityRef: entityRef },
           }
         );
         // Now pass the entityRef as a query parameter to the next API
         const allEvents = await axios.get(
-          "http://localhost:4000/api/event/events-count-entity",
+          "https://intracu-backend-mdl9.onrender.com/api/event/events-count-entity",
           {
             params: { entityRef: entityRef },
           }
@@ -676,7 +676,7 @@ const Page = () => {
 
 
         const MembersCountResponse = await axios.get(
-          "http://localhost:4000/api/member/member-count",
+          "https://intracu-backend-mdl9.onrender.com/api/member/member-count",
           {
             params: { entity: entityRef },
           }

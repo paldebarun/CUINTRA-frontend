@@ -39,7 +39,7 @@ const Page = () => {
     const toastId = toast.loading("Logging in...");
 
     try {
-      const response = await fetch('http://localhost:4000/api/login/login', {
+      const response = await fetch('https://intracu-backend-mdl9.onrender.com/api/login/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

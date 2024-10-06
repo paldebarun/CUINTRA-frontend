@@ -687,23 +687,23 @@ const Page = () => {
       const toastId = toast.loading("Please wait ...");
       try {
         const [userResponse, clubs, deptSocieties, profsocieties, communities] = await Promise.all([
-          axios.get('http://localhost:4000/api/me', { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get('https://intracu-backend-mdl9.onrender.com/api/me', { headers: { Authorization: `Bearer ${token}` } }),
           
-          axios.get('http://localhost:4000/api/clubRoutes/clubs'),
-          axios.get('http://localhost:4000/api/deptSocieties/departmental-societies'),
-          axios.get('http://localhost:4000/api/proffSocieties/professional-societies'),
-          axios.get('http://localhost:4000/api/communitiesRoutes/communities')
+          axios.get('https://intracu-backend-mdl9.onrender.com/api/clubRoutes/clubs'),
+          axios.get('https://intracu-backend-mdl9.onrender.com/api/deptSocieties/departmental-societies'),
+          axios.get('https://intracu-backend-mdl9.onrender.com/api/proffSocieties/professional-societies'),
+          axios.get('https://intracu-backend-mdl9.onrender.com/api/communitiesRoutes/communities')
           
         ]);
         const entityRef = userResponse.data.user.entity;
-        const budget = await axios.get('http://localhost:4000/api/event/getTotalBudgetByEntity',{
+        const budget = await axios.get('https://intracu-backend-mdl9.onrender.com/api/event/getTotalBudgetByEntity',{
           params:{entityRef:entityRef}
       });
-        const unApprovedEvents = await axios.get('http://localhost:4000/api/event/getUnapprovedByID',{
+        const unApprovedEvents = await axios.get('https://intracu-backend-mdl9.onrender.com/api/event/getUnapprovedByID',{
           params:{entityRef:entityRef}
         })
 
-        const allEvents = await axios.get('http://localhost:4000/api/event/events-count-entity',{
+        const allEvents = await axios.get('https://intracu-backend-mdl9.onrender.com/api/event/events-count-entity',{
           params:{entityRef:entityRef}
         });
        
@@ -755,11 +755,11 @@ const Page = () => {
     const loading=toast.loading('loading...');
 
     try {
-      await axios.post(`http://localhost:4000/api/event/approve`, null, {
+      await axios.post(`https://intracu-backend-mdl9.onrender.com/api/event/approve`, null, {
         params: { eventId: eventId },
       });
       const entityRef = user.entity;
-      const unApprovedEvents = await axios.get('http://localhost:4000/api/event/getUnapprovedByID', {
+      const unApprovedEvents = await axios.get('https://intracu-backend-mdl9.onrender.com/api/event/getUnapprovedByID', {
         params: { entityRef: entityRef }
       });
       setEventsApproval(unApprovedEvents.data.events);

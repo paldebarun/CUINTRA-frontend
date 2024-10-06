@@ -89,16 +89,16 @@ const Page = () => {
       
       switch(formData.entityType) {
         case "COMMUNITY":
-          endpoint = 'http://localhost:4000/api/communitiesRoutes/communities';
+          endpoint = 'https://intracu-backend-mdl9.onrender.com/api/communitiesRoutes/communities';
           break;
         case "DEPT. SOCIETY":
-          endpoint = 'http://localhost:4000/api/deptSocieties/departmental-societies';
+          endpoint = 'https://intracu-backend-mdl9.onrender.com/api/deptSocieties/departmental-societies';
           break;
         case "PROFF. SOCIETY":
-          endpoint = 'http://localhost:4000/api/proffSocieties/professional-societies';
+          endpoint = 'https://intracu-backend-mdl9.onrender.com/api/proffSocieties/professional-societies';
           break;
         default:
-          endpoint = 'http://localhost:4000/api/clubRoutes/clubs';
+          endpoint = 'https://intracu-backend-mdl9.onrender.com/api/clubRoutes/clubs';
       }
 
     

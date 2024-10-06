@@ -50,7 +50,7 @@ const EntityDisplay = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/communitiesRoutes/communities');
+                const response = await fetch('https://intracu-backend-mdl9.onrender.com/api/communitiesRoutes/communities');
                 const result = await response.json();
                 if (result.success) {
                     setData(result.Entity);
@@ -66,7 +66,7 @@ const EntityDisplay = () => {
     useEffect(() => {
         const fetchDepartments = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/departmentroutes/departments');
+                const response = await fetch('https://intracu-backend-mdl9.onrender.com/api/departmentroutes/departments');
                 const result = await response.json();
                 if (result.success) {
                     setDepartments(result.departments); // <-- Make sure this is an array of Department objects
@@ -82,7 +82,7 @@ const EntityDisplay = () => {
     useEffect(() => {
         const fetchClusters = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/cluster/clusters'); // <-- Update with your actual API endpoint for clusters
+                const response = await fetch('https://intracu-backend-mdl9.onrender.com/api/cluster/clusters'); // <-- Update with your actual API endpoint for clusters
                 const result = await response.json();
                 if (result.success) {
                     setClusters(result.clusters); // <-- Assuming the clusters come in the result.clusters array

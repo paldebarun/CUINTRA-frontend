@@ -86,7 +86,7 @@ const Page = ({ params }: { params: { entityName: string } }) => {
  
 
     try {
-      const response = await fetch('http://localhost:4000/api/send-otp', {
+      const response = await fetch('https://intracu-backend-mdl9.onrender.com/api/send-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ const Page = ({ params }: { params: { entityName: string } }) => {
  
 
     try {
-      const response = await axios.post('http://localhost:4000/api/submit-form', object);
+      const response = await axios.post('https://intracu-backend-mdl9.onrender.com/api/submit-form', object);
 
       console.log("response : ",response);
 

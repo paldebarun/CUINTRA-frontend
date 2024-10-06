@@ -39,7 +39,7 @@ const ApproveMembers = (user: Data) => {
       const toastId = toast.loading("Please wait ...");
       try {
         const entityRef = user.user.entity;
-        const membersOfEntity = await axios.get(`http://localhost:4000/api/member/listMembersOfEntityApproved`, {
+        const membersOfEntity = await axios.get(`https://intracu-backend-mdl9.onrender.com/api/member/listMembersOfEntityApproved`, {
           params: { entityRef: entityRef }
         });
         

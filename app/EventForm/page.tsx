@@ -133,7 +133,7 @@ const Page: React.FC = () => {
         }
       }
 
-      const response = await fetch('http://localhost:4000/api/event/events', {
+      const response = await fetch('https://intracu-backend-mdl9.onrender.com/api/event/events', {
         method: 'POST',
         body: formDataToSend
       });

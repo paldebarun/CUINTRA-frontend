@@ -60,7 +60,7 @@ const OngoingEvents = () => {
             console.log("this is entity ref : ", entityRef);
 
             try {
-                const events = await axios.get(`http://localhost:4000/api/event/getAllEventsById`, {
+                const events = await axios.get(`https://intracu-backend-mdl9.onrender.com/api/event/getAllEventsById`, {
                     params: { entityRef: entityRef },
                 });
 

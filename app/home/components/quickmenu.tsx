@@ -72,10 +72,10 @@ export default function QuickMenu() {
         const fetchBodies = async () => {
             const loadingId=toast.loading("loading...");
             try {
-                const res = await axios.get('http://localhost:4000/api/allbodies/getallbodies');
+                const res = await axios.get('https://intracu-backend-mdl9.onrender.com/api/allbodies/getallbodies');
                 console.log("this is response of bodies ", res);
 
-                const members=await axios.get('http://localhost:4000/api/member/getAllmembers');
+                const members=await axios.get('https://intracu-backend-mdl9.onrender.com/api/member/getAllmembers');
 
                 console.log("this is response of members : ",members);
 

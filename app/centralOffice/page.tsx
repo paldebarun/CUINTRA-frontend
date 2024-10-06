@@ -607,7 +607,7 @@ const Page = () => {
   
     const fetchCounts = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/entity-counts');
+        const response = await fetch('https://intracu-backend-mdl9.onrender.com/api/entity-counts');
         const data = await response.json();
 
         
@@ -624,7 +624,7 @@ const Page = () => {
   
     const fetchEvents = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/event/getAllEvents');
+        const response = await fetch('https://intracu-backend-mdl9.onrender.com/api/event/getAllEvents');
         const data = await response.json();
 
        console.log("this is events : ",events);
@@ -642,7 +642,7 @@ const Page = () => {
   
     const fetchEventCount = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/event-counts');
+        const response = await fetch('https://intracu-backend-mdl9.onrender.com/api/event-counts');
         const data = await response.json();
 
         console.log("this is event count : ",data.data);
@@ -680,7 +680,7 @@ const Page = () => {
       router.push('/login');
     } else {
       // Fetch user data using token
-      fetch('http://localhost:4000/api/me', {
+      fetch('https://intracu-backend-mdl9.onrender.com/api/me', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,

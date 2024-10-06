@@ -88,7 +88,7 @@ const ApproveEvents = (user: Data) => {
 
       try {
         const entityRef = user.user.entity;
-        const events = await axios.get(`http://localhost:4000/api/event/getUnapprovedByID`, {
+        const events = await axios.get(`https://intracu-backend-mdl9.onrender.com/api/event/getUnapprovedByID`, {
           params: { entityRef: entityRef }
         });
 
@@ -112,7 +112,7 @@ const ApproveEvents = (user: Data) => {
   const sendInvite = async (entityRef: string, eventRef: string) => {
     const toastId = toast.loading('Sending...')
     try {
-      const response = await axios.post(`http://localhost:4000/api/member/inviteMembersByEntity`, {
+      const response = await axios.post(`https://intracu-backend-mdl9.onrender.com/api/member/inviteMembersByEntity`, {
         entityRef: entityRef,
         eventRef: eventRef
       });

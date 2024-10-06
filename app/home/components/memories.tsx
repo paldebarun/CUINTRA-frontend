@@ -15,7 +15,7 @@ export default function Memories() {
 
         const fetchEvents=async ()=>{
             try {
-                const response = await axios.get('http://localhost:4000/api/event/getallEvents');
+                const response = await axios.get('https://intracu-backend-mdl9.onrender.com/api/event/getallEvents');
                 console.log('Fetched events: ', response);
                 setEvents(response.data.events);
               } catch (error) {
