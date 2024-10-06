@@ -12,17 +12,67 @@ import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
-const page = () => {
+interface FormData {
+  EntityCluster: string;
+  EntityInstitute: string;
+  ProposedBy: string;
+  ProposedDate: string;
+  ProposedEntityName: string;
+  entityCategory: string;
+  entityType: string;
+  proponentDepartment: string;
+  proponentName: string;
+  proposedFacultyAdvisor1: FacultyAdvisor;
+  proposedFacultyAdvisor2: FacultyAdvisor;
+  proposedFacultyCoAdvisor1: FacultyAdvisor;
+  proposedFacultyCoAdvisor2: FacultyAdvisor;
+  proposedStudentJointRepresentative1: StudentRepresentative;
+  proposedStudentJointRepresentative2: StudentRepresentative;
+  proposedStudentRepresentative1: StudentRepresentative;
+  proposedStudentRepresentative2: StudentRepresentative;
+}
 
-  const [pagination, setPagination] = useState(1)
-  const [formData, setFormData] = useState({
-    entityType:"",
+interface FacultyAdvisor {
+  ProposedFacultyAdvisorName: string;
+  ProposedFacultyAdvisorEid: string;
+  MobileNumber: string;
+}
+
+interface StudentRepresentative {
+  proposedStudentRepresentativeName: string;
+  proposedStudentRepresentativeUid: string;
+  MobileNumber: string;
+}
+
+const Page = () => {
+
+  const [pagination, setPagination] = useState<number>(1)
+  const [formData, setFormData] = useState<FormData>({
+    EntityCluster: "",
+  EntityInstitute: "",
+  ProposedBy: "",
+  ProposedDate: "",
+  ProposedEntityName: "",
+  entityCategory: "",
+  entityType: "",
+  proponentDepartment: "",
+  proponentName: "",
+  proposedFacultyAdvisor1: { ProposedFacultyAdvisorName: "", ProposedFacultyAdvisorEid: "", MobileNumber: "" },
+  proposedFacultyAdvisor2: { ProposedFacultyAdvisorName: "", ProposedFacultyAdvisorEid: "", MobileNumber: "" },
+  proposedFacultyCoAdvisor1: { ProposedFacultyAdvisorName: "", ProposedFacultyAdvisorEid: "", MobileNumber: "" },
+  proposedFacultyCoAdvisor2: { ProposedFacultyAdvisorName: "", ProposedFacultyAdvisorEid: "", MobileNumber: "" },
+  proposedStudentJointRepresentative1: { proposedStudentRepresentativeName: "", proposedStudentRepresentativeUid: "", MobileNumber: "" },
+  proposedStudentJointRepresentative2: { proposedStudentRepresentativeName: "", proposedStudentRepresentativeUid: "", MobileNumber: "" },
+  proposedStudentRepresentative1: { proposedStudentRepresentativeName: "", proposedStudentRepresentativeUid: "", MobileNumber: "" },
+  proposedStudentRepresentative2: { proposedStudentRepresentativeName: "", proposedStudentRepresentativeUid: "", MobileNumber: "" }
     
   })
+
+
   const router = useRouter();
 
 
-  const updateFormData = (data:any) => {
+  const updateFormData = (data:Partial<FormData>) => {
     setFormData(prevData => ({
       ...prevData,
       ...data
@@ -140,4 +190,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

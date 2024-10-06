@@ -2,21 +2,44 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import arrow from '../../images/Group 3430.png';
 
-const SecondForm = ({ pagination, setPagination, formData, updateFormData }: any) => {
-  const [localFormData, setLocalFormData] = useState(formData);
 
-  const handleInputChange = (e: any) => {
+interface ProposedStudentRepresentative {
+  proposedStudentRepresentativeName: string;
+  proposedStudentRepresentativeUid: string;
+  MobileNumber: string;
+}
+
+interface FormData {
+  proposedStudentRepresentative1: ProposedStudentRepresentative;
+  proposedStudentRepresentative2: ProposedStudentRepresentative;
+  proposedStudentJointRepresentative1: ProposedStudentRepresentative;
+  proposedStudentJointRepresentative2: ProposedStudentRepresentative;
+}
+
+
+interface SecondFormProps {
+  pagination: number;
+  setPagination: (page: number) => void;
+  formData: FormData;
+  updateFormData: (data: FormData) => void;
+}
+
+const SecondForm: React.FC<SecondFormProps> = ({ pagination, setPagination, formData, updateFormData }) => {
+  const [localFormData, setLocalFormData] = useState<FormData>(formData);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const [section, field] = name.split('.');
 
-    setLocalFormData((prevData: any) => ({
+    // Type assertion to ensure that section is a key of FormData
+    setLocalFormData((prevData) => ({
       ...prevData,
-      [section]: {
-        ...prevData[section],
+      [section as keyof FormData]: {
+        ...prevData[section as keyof FormData], // Type assertion here too
         [field]: value,
       },
     }));
-  };
+};
 
   const handleNext = () => {
     updateFormData(localFormData); // Sync the local form data with the parent form data before moving to the next step

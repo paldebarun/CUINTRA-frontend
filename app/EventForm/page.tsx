@@ -31,7 +31,23 @@ import rupee from '../images/₹.png'
 import { useRouter } from "next/navigation"
 import { toast } from 'react-hot-toast';
 
-const Page = () => {
+interface FormData {
+  eventName: string;
+  startDate: Date;
+  endDate: Date;
+  isSameDate: boolean;
+  organizerCategory: string;
+  organizerName: string;
+  venue: string;
+  organizationLevel: string;
+  eventType: string;
+  eventCategory: string;
+  imageFile: File | null;
+  budget: string;
+  entity: string | null;
+}
+
+const Page: React.FC = () => {
   const router = useRouter();
   
 
@@ -42,8 +58,8 @@ const Page = () => {
   if(!entity){
     router.push('/login');
   }
-  const [isDesktop, setIsDesktop] = useState(true);
-  const [formData, setFormData] = useState<any>({
+  const [isDesktop, setIsDesktop] = useState<boolean>(true);
+  const [formData, setFormData] = useState<FormData>({
     eventName: '',
     startDate: new Date(),
     endDate: new Date(),
@@ -66,12 +82,12 @@ const Page = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleInputChange = (field:any, value:any) => {
-    setFormData((prev:any) => ({ ...prev, [field]: value }));
+  const handleInputChange = (field: keyof FormData, value: string | boolean | Date | null) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleCheckboxChange = () => {
-    setFormData((prev:any) => ({
+    setFormData((prev) => ({
       ...prev,
       isSameDate: !prev.isSameDate,
       endDate: !prev.isSameDate ? prev.startDate : prev.endDate
@@ -79,10 +95,14 @@ const Page = () => {
   };
 
   
-  const handleFileChange = (event:any) => {
-    setFormData((prev:any) => ({ ...prev, imageFile: event.target.files[0] }));
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files; 
+  
+   
+    if (files && files.length > 0) {
+      setFormData((prev) => ({ ...prev, imageFile: files[0] }));
+    }
   };
-
   const submitHandler = async () => {
     try {
       const toastId = toast.loading("Submitting form");
@@ -105,6 +125,7 @@ const Page = () => {
       });
 
       const result = await response.json();
+
       if (response.ok) {
         toast.dismiss(toastId);
           toast.success("Event created successfully");
@@ -127,8 +148,8 @@ const Page = () => {
     "Institute"
     
 ];
-  const TypesData = ["flagship", "weekly", "monthly"  ];
-  const organizationalCategoryData = ["Hackathon", "Workshop", "Seminar"];
+  const TypesData: string[] = ["flagship", "weekly", "monthly"  ];
+  const organizationalCategoryData: string[] = ["Hackathon", "Workshop", "Seminar"];
 
   if (!isDesktop) {
     return (

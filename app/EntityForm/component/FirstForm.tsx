@@ -6,24 +6,41 @@ const entityTypes = ["CLUB", "DEPT. SOCIETY", "COMMUNITY", "PROFF. SOCIETY"];
 const entitycategoryData = ["A", "B", "C", "D"];
 const proposedByData = ["Student", "Faculty"];
 
-const FirstForm = ({ pagination, setPagination, formData, updateFormData }: any) => {
+interface FirstFormProps {
+  pagination: number;
+  setPagination: (page: number) => void;
+  formData: {
+    ProposedEntityName?: string;
+    ProposedDate?: string;
+    entityType?: string;
+    entityCategory?: string;
+    ProposedBy?: string;
+    proponentName?: string;
+    proponentDepartment?: string;
+    EntityCluster?: string;
+    EntityInstitute?: string;
+  };
+  updateFormData: (data: Partial<FirstFormProps['formData']>) => void;
+}
+
+const FirstForm : React.FC<FirstFormProps>= ({ pagination, setPagination, formData, updateFormData }) => {
   const [localFormData, setLocalFormData] = useState(formData);
 
-  // Handle input change for text fields
-  const handleInputChange = (e: any) => {
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    setLocalFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+
+  const handleSelectChange = (name: keyof FirstFormProps['formData'], value: string) => {
     setLocalFormData((prevData: any) => ({ ...prevData, [name]: value }));
   };
 
-  // Handle select change for clickable divs
-  const handleSelectChange = (name: any, value: any) => {
-    setLocalFormData((prevData: any) => ({ ...prevData, [name]: value }));
-  };
-
-  // Update formData on next button click and go to the next step
+  
   const handleNext = () => {
-    updateFormData(localFormData); // Sync with parent component
-    setPagination(pagination + 1); // Move to the next step
+    updateFormData(localFormData); 
+    setPagination(pagination + 1); 
   };
 
   return (

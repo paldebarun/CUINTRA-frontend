@@ -1,15 +1,33 @@
-import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
-import arrow from '../../images/Group 3430.png'
+import React, { useState } from 'react';
+import Image from 'next/image';
+import arrow from '../../images/Group 3430.png';
 
+interface ProposedStudentRepresentative {
+  proposedStudentRepresentativeName: string;
+  proposedStudentRepresentativeUid: string;
+  MobileNumber: string;
+}
 
-const FourthForm = ({ pagination, setPagination, formData, updateFormData, handleSubmit }:any) => {
-  const [localFormData, setLocalFormData] = useState(formData);
+interface FormData {
+  proposedStudentRepresentative1: ProposedStudentRepresentative;
+  proposedStudentRepresentative2: ProposedStudentRepresentative;
+  proposedStudentJointRepresentative1: ProposedStudentRepresentative;
+  proposedStudentJointRepresentative2: ProposedStudentRepresentative;
+}
 
+interface FourthFormProps {
+  pagination: number;
+  setPagination: (page: number) => void;
+  formData: FormData;
+  updateFormData: (data: Partial<FormData>) => void; 
+  handleSubmit: () => Promise<void>;
+}
+
+const FourthForm: React.FC<FourthFormProps> = ({ pagination, setPagination, formData, updateFormData, handleSubmit }) => {
   
+  const [localFormData, setLocalFormData] = useState<FormData>(formData);
 
-  // Update form data in the parent on form submission or when moving to the next/previous page
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     updateFormData(localFormData); // Sync the form data with the parent component
     await handleSubmit();
@@ -19,16 +37,19 @@ const FourthForm = ({ pagination, setPagination, formData, updateFormData, handl
     <div className='w-full px-3'>
       <p className='text-lg'>REFERRAL DETAILS</p>
 
-    
-      <div className='w-full flex justify-end gap-6 px-5 py-16'>
-        <div onClick={() => { setPagination(pagination - 1) }} className='bg-[#767676] text-white px-4 py-3 rounded-lg hover:cursor-pointer'>BACK</div>
-        <div onClick={onSubmit} className='bg-[#6296FE] text-white px-4 py-3 rounded-lg gap-2 flex items-center justify-center hover:cursor-pointer'>
-          <p>SUBMIT</p>
-          <Image src={arrow} alt="arrow" />
+      <form onSubmit={onSubmit}>
+        
+        
+        <div className='w-full flex justify-end gap-6 px-5 py-16'>
+          <div onClick={() => { setPagination(pagination - 1) }} className='bg-[#767676] text-white px-4 py-3 rounded-lg hover:cursor-pointer'>BACK</div>
+          <button type="submit" className='bg-[#6296FE] text-white px-4 py-3 rounded-lg gap-2 flex items-center justify-center hover:cursor-pointer'>
+            <p>SUBMIT</p>
+            <Image src={arrow} alt="arrow" />
+          </button>
         </div>
-      </div>
+      </form>
     </div>
-  )
+  );
 }
 
-export default FourthForm
+export default FourthForm;

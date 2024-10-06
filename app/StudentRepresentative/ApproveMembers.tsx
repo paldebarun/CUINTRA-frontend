@@ -6,10 +6,26 @@ import { useEffect,useState } from 'react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
+
+
+interface Member {
+  _id: string; // MongoDB ObjectId as a string
+  name: string; // Member's name
+  email: string; // Member's email
+  uid: string; // Member's unique ID
+  approval: boolean; // Approval status
+  entityRef: string; // Reference to the entity (e.g., club ID)
+  entityType: string; // Type of the entity (e.g., Club)
+  otp: string; // One-time password
+  otpExpiry: string; // Expiry time for the OTP (ISO 8601 format)
+  __v: number; // Version key from MongoDB
+}
+
+
 const ApproveMembers = (user:any) => {
 
   const router=useRouter();
-  const [eventsApproval, setEventsApproval] = useState<any[]>([]);
+  const [eventsApproval, setEventsApproval] = useState<Member[]>([]);
 
 
    
@@ -39,7 +55,7 @@ const ApproveMembers = (user:any) => {
           console.log("this is member : ",membersOfEntity);
 
           if(membersOfEntity){
-            const sortedMembers = membersOfEntity.data.response.sort((a: any, b: any) => a.approval === b.approval ? 0 : a.approval ? 1 : -1);
+            const sortedMembers = membersOfEntity.data.response.sort((a: Member, b: Member) => a.approval === b.approval ? 0 : a.approval ? 1 : -1);
             setEventsApproval(sortedMembers);
 
           }
@@ -61,7 +77,7 @@ const ApproveMembers = (user:any) => {
 
 
 
-  const handleMemberApproval = async (memberId:any) => {
+  const handleMemberApproval = async (memberId:string) => {
    const toastId= toast.loading('approving member ...')
     try {
       await axios.post(`http://localhost:4000/api/member/approve`, null, {
@@ -76,9 +92,11 @@ const ApproveMembers = (user:any) => {
           }
           return member;
         });
+
+        
   
        
-        const sortedMembers = updatedMembers.sort((a: any, b: any) => a.approval === b.approval ? 0 : a.approval ? 1 : -1);
+        const sortedMembers = updatedMembers.sort((a: Member, b: Member) => a.approval === b.approval ? 0 : a.approval ? 1 : -1);
   
         return sortedMembers;
       });
@@ -91,7 +109,7 @@ const ApproveMembers = (user:any) => {
     }
   };
 
-  const handleMemberRejection = async (memberId:any) => {
+  const handleMemberRejection = async (memberId:string) => {
 
     const toastId= toast.loading('rejecting member ...')
     try {

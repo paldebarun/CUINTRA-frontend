@@ -66,6 +66,38 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
+interface FacultyMember {
+  entity: string; 
+  name: string;
+  role: string; 
+}
+
+interface Event {
+  eventType: string; // Example: "weekly"
+  approval: boolean; // Example: false
+  budget: number; // Example: 1998
+  category: string; // Example: "Hackathon"
+  date: {
+    startDate: string; // ISO 8601 format
+    endDate: string; // ISO 8601 format
+  };
+  entity: {
+    type: string; // Example: "club"
+    id: string; // MongoDB ObjectId as a string
+  };
+  featured: boolean; // Example: false
+  imageUrl: string; // URL to the image
+  name: string; // Example: "Trying from form"
+  organizationLevel: string; // Example: "Open for all"
+  organizer: {
+    type: string; // Example: "Department"
+    id: string; // MongoDB ObjectId as a string
+  };
+  venue: string; // Example: "C2 audi"
+  __v: number; // Version key from MongoDB
+  _id: string; // MongoDB ObjectId as a string
+}
+
 
 const sidebarData=[
     {
@@ -619,9 +651,9 @@ const Page = () => {
 
   // const [date, setDate] = useState(new Date());
   // const [schedule, setSchedule] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [user, setUser] = useState<any>(null);
-  const [eventsApproval, setEventsApproval] = useState<any[]>([]);
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [user, setUser] = useState<FacultyMember |null>(null);
+  const [eventsApproval, setEventsApproval] = useState<Event[]>([]);
   // const [error, setError] = useState('');
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -679,6 +711,8 @@ const Page = () => {
           if(userResponse.data.user.role!="Faculty"){
             router.push('/login');
           }
+          console.log("this is user : ",userResponse.data.user);
+          console.log("this is event : ",unApprovedEvents.data.events);
           setUser(userResponse.data.user);
           console.log(unApprovedEvents.data.events);
           setEventsApproval(unApprovedEvents.data.events);
@@ -717,7 +751,7 @@ const Page = () => {
   if (loading || !user) return <p></p>;
 
 
-  const handleEventApproval = async (eventId:any) => {
+  const handleEventApproval = async (eventId:string) => {
     const loading=toast.loading('loading...');
 
     try {
@@ -946,7 +980,7 @@ const Page = () => {
                       <tr key={index} className="border-b px-2">
                         <td className="py-3 text-sm px-6 font-light">{event.name}</td>
                         <td className="py-3 text-sm px-6 font-light">
-                        {new Date(event.date).toLocaleDateString('en-GB')}
+                        {new Date(event.date.startDate).toLocaleDateString('en-GB')}
                         </td>
                         <td className="py-3 text-sm px-6 font-light">{event.organizer.type}</td>
                         <td className="py-3 px-6">
