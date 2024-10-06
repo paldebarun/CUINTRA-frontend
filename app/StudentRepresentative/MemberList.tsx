@@ -5,10 +5,33 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Input } from "@/components/ui/input"
 
+interface Member {
+  approval: boolean; // Example: true
+  email: string; // Example: "21BCS1155@cuchd.in"
+  entityRef: string; // Example: "66f9948916bc12d78e5c3c64" (MongoDB ObjectId as a string)
+  entityType: string; // Example: "Club"
+  name: string; // Example: "Debarun"
+  otp: string; // Example: "198343"
+  otpExpiry: string; // ISO 8601 format for OTP expiry date
+  uid: string; // Example: "21bcs1155"
+  __v: number; // Version key from MongoDB
+  _id: string; // MongoDB ObjectId as a string
+  gender:string;
+}
 
 
-const ApproveMembers = (user: any) => {
-  const [eventsApproval, setEventsApproval] = useState<any[]>([]);
+interface User {
+  entity: string; // ID for the entity
+  name: string;   // Name of the student representative
+  role: string;   // Role of the individual
+}
+
+interface Data {
+  user: User;    
+}
+
+const ApproveMembers = (user: Data) => {
+  const [eventsApproval, setEventsApproval] = useState<Member[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
@@ -19,6 +42,8 @@ const ApproveMembers = (user: any) => {
         const membersOfEntity = await axios.get(`http://localhost:4000/api/member/listMembersOfEntityApproved`, {
           params: { entityRef: entityRef }
         });
+        
+        console.log("this is member : ",membersOfEntity.data.response);
 
         if (membersOfEntity) {
           setEventsApproval(membersOfEntity.data.response);

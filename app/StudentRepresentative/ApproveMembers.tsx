@@ -21,8 +21,17 @@ interface Member {
   __v: number; // Version key from MongoDB
 }
 
+interface User {
+  entity: string; // ID for the entity
+  name: string;   // Name of the student representative
+  role: string;   // Role of the individual
+}
 
-const ApproveMembers = (user:any) => {
+interface Data {
+  user: User;    
+}
+
+const ApproveMembers = (user:Data) => {
 
   const router=useRouter();
   const [eventsApproval, setEventsApproval] = useState<Member[]>([]);

@@ -95,9 +95,9 @@ const Page = ({ params }: { params: { entityName: string } }) => {
       });
       
 
-      const data = await response.json();
+      // const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok ) {
         toast.dismiss(toastId);
         toast.success("otp sent successfully");
        

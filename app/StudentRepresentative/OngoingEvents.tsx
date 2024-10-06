@@ -4,10 +4,38 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
+interface Event {
+    Eventtype: string; // Example: "flagship"
+    approval: boolean; // Example: false
+    budget: number; // Example: 20000
+    category: string; // Example: "Hackathon"
+    date: {
+      startDate: string; // ISO 8601 format for the start date
+      endDate: string; // ISO 8601 format for the end date
+    };
+    entity: {
+      type: string; // Example: "club"
+      id: string; // MongoDB ObjectId as a string
+    };
+    featured: boolean; // Example: false
+    imageUrl: string; // URL to the event image
+    name: string; // Example: "hackfest"
+    organizationLevel: string; // Example: "Open for all"
+    organizer: {
+      type: string; // Example: "Department"
+      id: string; // MongoDB ObjectId as a string
+    };
+    venue: string; // Example: "c2"
+    __v: number; // Version key from MongoDB
+    _id: string; // MongoDB ObjectId as a string
+  }
+
+ 
+
 const OngoingEvents = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [transitioning, setTransitioning] = useState(false);
-    const [slides, setSlidesData] = useState<any[]>([]);
+    const [slides, setSlidesData] = useState<Event[]>([]);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -37,6 +65,8 @@ const OngoingEvents = () => {
                 });
 
                 console.log("this is event : ", events);
+
+             
 
                 setSlidesData(events.data.events);
             } catch (error) {

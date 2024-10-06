@@ -58,6 +58,16 @@ import {
 } from "@/components/ui/tooltip"
 
 
+interface User{
+  name:string;
+  role:string;
+}
+
+interface eventCounts{
+  flagship:number;
+  monthly:number;
+  weekly:number;
+}
 
 // const chartConfig = {
 //   Dept_Societies: {
@@ -507,7 +517,41 @@ const NotificationData=[
   "notification 2",
 ]
 
+interface Event {
+  Eventtype: string; // Example: "flagship"
+  approval: boolean; // Example: false
+  budget: number; // Example: 20000
+  category: string; // Example: "Hackathon"
+  date: string;
+  entity: {
+    type: string; // Example: "club"
+    id: string; // MongoDB ObjectId as a string
+  };
+  featured: boolean; // Example: false
+  imageUrl: string; // URL to the event image
+  name: string; // Example: "hackfest"
+  organizationLevel: string; // Example: "Open for all"
+  organizer: {
+    type: string; // Example: "Department"
+    id: string; // MongoDB ObjectId as a string
+  };
+  venue: string; // Example: "c2"
+  __v: number; // Version key from MongoDB
+  _id: string; // MongoDB ObjectId as a string
+}
 
+
+interface Society {
+  count: number; // Number of societies of this type
+  label: string; // Label for the type of society (e.g., "Club", "Community", etc.)
+}
+
+interface Societies {
+  clubs: Society;               // Information about clubs
+  communities: Society;         // Information about communities
+  departmentalSocieties: Society; // Information about departmental societies
+  professionalSocieties: Society;  // Information about professional societies
+}
 
 
 const Page = () => {
@@ -536,20 +580,26 @@ const Page = () => {
 
 
   const [date, setDate] = useState<Date | undefined>(new Date());
+
+  // @ts-ignore
   const [schedule, setSchedule] = useState<ScheduleEvent[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const [counts, setCounts] = useState<any>(null); 
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [counts, setCounts] = useState<Societies | null>(null); 
   // const [error, setError] = useState(''); 
   // const [loading, setLoading] = useState(true); 
-  const [eventcounts,setEventcounts]= useState<any>(null);
+  const [eventcounts,setEventcounts]= useState<eventCounts>({
+    flagship:0,
+    weekly:0,
+    monthly:0
+  });
   // const [eventloading,setEventloading]= useState(true);
-  const [events,setEvents] = useState<any[]>([]);
+  const [events,setEvents] = useState<Event[]>([]);
   const router = useRouter();
 
-  const handleModalToggle = () => {
-    setIsModalOpen(!isModalOpen);
-  };
+  // const handleModalToggle = () => {
+  //   setIsModalOpen(!isModalOpen);
+  // };
 
   
   useEffect(() => {
@@ -559,6 +609,8 @@ const Page = () => {
       try {
         const response = await fetch('http://localhost:4000/api/entity-counts');
         const data = await response.json();
+
+        
         if (data.success) {
           setCounts(data.data); // Set the counts in state
         } else {
@@ -574,6 +626,9 @@ const Page = () => {
       try {
         const response = await fetch('http://localhost:4000/api/event/getAllEvents');
         const data = await response.json();
+
+       console.log("this is events : ",events);
+
         if (data.success) {
           setEvents(data.events); // Set the events in state
         } else {
@@ -589,6 +644,9 @@ const Page = () => {
       try {
         const response = await fetch('http://localhost:4000/api/event-counts');
         const data = await response.json();
+
+        console.log("this is event count : ",data.data);
+        
         if (data.success) {
           setEventcounts(data.data); // Set the event counts in state
         } else {

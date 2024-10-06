@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef, useState } from 'react';
+import React from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
@@ -8,9 +8,34 @@ import '../styles/home.css';
 
 import { Autoplay } from 'swiper/modules';
 
+interface Event {
+  Eventtype: string; // Example: "flagship"
+  approval: boolean; // Example: false
+  budget: number; // Example: 20000
+  category: string; // Example: "Hackathon"
+  date: string;
+  entity: {
+    type: string; // Example: "club"
+    id: string; // MongoDB ObjectId as a string
+  };
+  featured: boolean; // Example: false
+  imageUrl: string; // URL to the event image
+  name: string; // Example: "hackfest"
+  organizationLevel: string; // Example: "Open for all"
+  organizer: {
+    type: string; // Example: "Department"
+    id: string; // MongoDB ObjectId as a string
+  };
+  venue: string; // Example: "c2"
+  __v: number; // Version key from MongoDB
+  _id: string; // MongoDB ObjectId as a string
+}
 
+interface Data{
+  data:Event[];
+}
 
-export default function SwiperCont(data:any) {
+export default function SwiperCont(data:Data) {
 
   console.log("data is : ",data);
   
@@ -31,7 +56,7 @@ export default function SwiperCont(data:any) {
         className="mySwiper w-full"
       >
         {
-          data.data.map((ele:any,index:any)=>(
+          data.data.map((ele:Event,index:number)=>(
             <SwiperSlide key={index}>
             <Image
                   src={ele.imageUrl}

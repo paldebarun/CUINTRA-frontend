@@ -3,9 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 
-type Props = {}
 
-export default function Header({ }: Props) {
+
+export default function Header() {
     return (
 
         <header className="bg-[#151515]/[.25] z-20 backdrop-blur-[520.83px] text-white p-4 absolute top-0 left-0 w-full px-6">

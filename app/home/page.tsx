@@ -8,9 +8,8 @@ import Ranking from './components/ranking'
 import './styles/home.css'
 import Memories from './components/memories'
 
-type Props = {}
 
-export default function Home({}: Props) {
+export default function Home() {
   return (
     <div className="flex flex-col bg-[#FEFEFE]">
         <Header/>

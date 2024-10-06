@@ -3,9 +3,9 @@ import Header from './components/header'
 import './styles/landing.css'
 import Landing from './components/landing'
 
-type Props = {}
 
-export default function LandingPage({}: Props) {
+
+export default function LandingPage() {
   return (
     <>
         <div className="flex flex-col">

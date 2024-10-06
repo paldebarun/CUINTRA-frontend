@@ -13,7 +13,7 @@ import secretarylogo from '../images/school.png'
 import Link from 'next/link'
 
 
-const page = () => {
+const Page = () => {
 
     const [isDesktop, setIsDesktop] = useState<boolean>(true);
 
@@ -100,4 +100,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

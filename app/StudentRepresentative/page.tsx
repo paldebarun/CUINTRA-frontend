@@ -43,6 +43,12 @@ import axios from "axios";
 import Link from "next/link";
 // import { ObjectId } from "mongoose";
 
+interface User {
+  entity: string; // Example: "66f9948916bc12d78e5c3c64" (MongoDB ObjectId as a string)
+  name: string; // Example: "Debarun"
+  role: string; // Example: "Student Rep"
+}
+
 import {
   Popover,
   PopoverContent,
@@ -82,6 +88,8 @@ import OngoingEvents from "./OngoingEvents";
 //     color: "#BF83FF",
 //   },
 // } satisfies ChartConfig;
+
+
 
 const sidebarData = [
   {
@@ -581,6 +589,7 @@ const NotificationData = ["notification 1", "notification 2", "notification 2"];
 
 const Page = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
+  // @ts-ignore
   const [schedule, setSchedule] = useState<ScheduleEvent[]>([]);
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
   const [currentMenu, setCurrentMenu] = useState<string>("Approved Events");
@@ -606,7 +615,7 @@ const Page = () => {
   // const [date, setDate] = useState(new Date());
   // const [schedule, setSchedule] = useState([]);
   // const [isModalOpen, setIsModalOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   // const [error, setError] = useState('');
   const [loading, setLoading] = useState<boolean>(true);
@@ -683,6 +692,7 @@ const Page = () => {
         EntityData[0].data[2].value = membersObj.other;
 
         if (userResponse.data.success) {
+          console.log("this is user : ",userResponse.data.user);
           setUser(userResponse.data.user);
 
           // Update EntityData with fetched values
