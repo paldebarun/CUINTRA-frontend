@@ -30,6 +30,7 @@ import uploadfile from '../images/upload_file.png'
 import rupee from '../images/₹.png'
 import { useRouter } from "next/navigation"
 import { toast } from 'react-hot-toast';
+import axios from 'axios'
 
 interface FormData {
   eventName: string;
@@ -133,14 +134,18 @@ const Page: React.FC = () => {
         }
       }
 
-      const response = await fetch('https://intracu-backend-mdl9.onrender.com/api/event/events', {
-        method: 'POST',
-        body: formDataToSend
-      });
+      // const response = await fetch('https://intracu-backend-mdl9.onrender.com/api/event/events', {
+      //   method: 'POST',
+      //   body: formDataToSend
+      // });
+
+      const response=await axios.post('https://intracu-backend-mdl9.onrender.com/api/event/events',formDataToSend);
 
       // const result = await response.json();
 
-      if (response.ok) {
+      console.log(response);
+
+      if (response.data.success) {
         toast.dismiss(toastId);
           toast.success("Event created successfully");
         router.push('/StudentRepresentative');
