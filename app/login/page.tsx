@@ -74,7 +74,7 @@ const Page = () => {
 
                 </div>
                 
-                <Link href="/login/AppointmentHolder" className='w-full bg-[#D91F23] font-bold rounded-full py-2 text-2xl'>
+                <Link href="https://pvc2.vercel.app/login" className='w-full bg-[#D91F23] font-bold rounded-full py-2 text-2xl'>
                     login
                 </Link>
 
