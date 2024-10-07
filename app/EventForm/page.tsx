@@ -118,6 +118,10 @@ const Page: React.FC = () => {
     try {
       const toastId = toast.loading("Submitting form");
       const formDataToSend = new FormData();
+      
+      formData.entity=entity;
+
+      console.log(formData)
       for (const key in formData) {
         if (formData.hasOwnProperty(key)) {
           const typedKey = key as keyof FormData;
@@ -138,6 +142,8 @@ const Page: React.FC = () => {
       //   method: 'POST',
       //   body: formDataToSend
       // });
+
+      console.log("this is formdata : ",formDataToSend);
 
       const response=await axios.post('https://intracu-backend-mdl9.onrender.com/api/event/events',formDataToSend);
 
