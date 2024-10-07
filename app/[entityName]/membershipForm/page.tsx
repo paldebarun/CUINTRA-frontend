@@ -61,7 +61,7 @@ const Page = ({ params }: { params: { entityName: string } }) => {
   
 
 
-  const router=useRouter();
+  // const router=useRouter();
   const [entityName, setEntityName] = useState(params.entityName);
   const [name, setName] = useState('');
   const [uid, setUid] = useState('');
