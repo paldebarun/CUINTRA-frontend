@@ -19,7 +19,7 @@ export default function MemberShipLayout({
         </div>
 
           <div className="hidden md:flex items-center space-x-10 ml-auto">
-            <Link href="https://pvc-website1.vercel.app/">
+            <Link href="https://pvc2.vercel.app/">
               <p className="text-white hover:text-white px-3 py-2 text-sm font-medium">Home</p>
             </Link>
             <Link href="/events">
@@ -28,7 +28,7 @@ export default function MemberShipLayout({
             <Link href="/activities">
               <p className="text-white hover:text-white px-3 py-2 text-sm font-medium">Activities</p>
             </Link>
-            <Link href="https://pvc-website1.vercel.app/club">
+            <Link href="https://pvc2.vercel.app/club">
               <p className="text-white hover:text-white px-3 py-2 text-sm font-medium">Entities</p>
             </Link>
             <Link href="/login">
