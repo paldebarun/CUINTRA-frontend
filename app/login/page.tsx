@@ -85,7 +85,7 @@ const Page = () => {
                 <div className='w-full space-y-3 border rounded-3xl py-10 px-2 flex flex-col items-center'>
                 <Image src={secretarylogo} alt="secretarylogo" />
                 <p className='text-3xl'>Secretary</p>
-                <p className='text-sm'>For faculty advisor and co advisor</p>
+                <p className='text-sm'>For Student representative</p>
                 </div>
                 <Link href="/login/secretary" className='w-full bg-[#D91F23] font-bold rounded-full py-2 text-2xl'>
                     login
