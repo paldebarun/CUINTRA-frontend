@@ -88,7 +88,7 @@ const ApproveEvents = (user: Data) => {
 
       try {
         const entityRef = user.user.entity;
-        const events = await axios.get(`https://intracu-backend-mdl9.onrender.com/api/event/getUnapprovedByID`, {
+        const events = await axios.get(`https://intracu-backend-mdl9.onrender.com/api/event/getapprovedByID`, {
           params: { entityRef: entityRef }
         });
 
